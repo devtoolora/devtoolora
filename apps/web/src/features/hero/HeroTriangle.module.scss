@@ -1,0 +1,123 @@
+@use '@styles/tokens.scss' as *;
+
+.heroTriangle {
+  position: absolute;
+  z-index: 0;
+  top: 56px;
+  right: 5%;
+  width: var(--hero-triangle-width);
+  height: auto;
+  pointer-events: none;
+}
+
+.heroTriangleLine {
+  stroke: rgb(150 205 255 / 38%);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: hero-triangle-draw 1.7s cubic-bezier(0.3, 0, 0.2, 1) backwards;
+}
+
+.heroTriangleAxis {
+  stroke: rgb(150 205 255 / 26%);
+  animation-delay: 0.15s;
+}
+
+.heroTriangleTail {
+  stroke: rgb(150 205 255 / 22%);
+  animation-delay: 0.9s;
+}
+
+.heroTriangleLine:nth-of-type(2) {
+  animation-delay: 0.35s;
+}
+
+.heroTriangleLine:nth-of-type(3) {
+  animation-delay: 0.5s;
+}
+
+.heroTriangleLine:nth-of-type(4) {
+  animation-delay: 0.65s;
+}
+
+.heroTriangleFlare {
+  stroke: rgb(214 239 255 / 55%);
+  stroke-width: 0.8;
+}
+
+.heroTriangleStar {
+  animation: hero-star-pulse 6s ease-in-out infinite;
+  transform-origin: 360px 240px;
+}
+
+@keyframes hero-triangle-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes hero-star-pulse {
+  0%,
+  100% {
+    opacity: 0.82;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.heroTriangleStarGlowLight {
+  display: none;
+}
+
+.heroTriangleStarDot {
+  fill: #eaf6ff;
+}
+
+:root[data-theme='light'] .heroTriangleLine {
+  stroke: rgb(0 109 167 / 35%);
+}
+
+:root[data-theme='light'] .heroTriangleAxis {
+  stroke: rgb(0 109 167 / 24%);
+}
+
+:root[data-theme='light'] .heroTriangleTail {
+  stroke: rgb(0 109 167 / 20%);
+}
+
+:root[data-theme='light'] .heroTriangleFlare {
+  stroke: rgb(0 109 167 / 55%);
+}
+
+:root[data-theme='light'] .heroTriangleStarGlowDark {
+  display: none;
+}
+
+:root[data-theme='light'] .heroTriangleStarGlowLight {
+  display: block;
+}
+
+:root[data-theme='light'] .heroTriangleStarDot {
+  fill: #00639a;
+}
+
+@media (max-width: 760px) {
+  .heroTriangle {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroTriangleLine,
+  .heroTriangleStar {
+    animation: none;
+  }
+}

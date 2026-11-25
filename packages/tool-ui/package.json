@@ -1,0 +1,31 @@
+{
+  "name": "@devtoolora/tool-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared React tool-runner for the web, desktop and VS Code surfaces. Consumed from source.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./ui": "./src/ui/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@devtoolora/browser-catalog": "0.1.0",
+    "@devtoolora/core": "0.1.0",
+    "@devtoolora/functions": "0.1.0",
+    "lucide-react": "^1.70.0",
+    "pdfjs-dist": "6.5.438"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "sass": "^1.108.0",
+    "typescript": "^5.8.0"
+  }
+}

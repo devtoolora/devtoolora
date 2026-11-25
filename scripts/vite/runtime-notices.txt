@@ -1,0 +1,21 @@
+THIRD-PARTY NOTICES
+
+The files in this folder are third-party WebAssembly runtimes and data, shipped unmodified.
+
+Components:
+- tesseract.js-core 7.0.0 (Apache-2.0): tesseract-core-simd-lstm.js, tesseract-core-simd-lstm.wasm
+  Source: https://github.com/naptha/tesseract.js-core
+- Tesseract tessdata_best models 4.0.0_best_int, via @tesseract.js-data/eng and
+  @tesseract.js-data/ces 1.0.0 (Apache-2.0): eng.traineddata.gzip, ces.traineddata.gzip
+  Source: https://github.com/tesseract-ocr/tessdata_best
+- libheif-js 1.23.5 (LGPL-3.0): libheif.js, libheif.wasm. It is built from libheif and libde265,
+  both LGPL-3.0.
+  Sources: https://github.com/catdad-experiments/libheif-js
+           https://github.com/strukturag/libheif
+           https://github.com/strukturag/libde265
+
+To use a modified libheif build, replace libheif.js and libheif.wasm in this folder with an interface-compatible build of libheif-js 1.23.5 and update their "bytes" and "sha256" in runtime-manifest.json.
+
+The Apache License 2.0 (tesseract.js-core, which also covers the tessdata_best models) and the
+GNU Lesser General Public License 3.0 with the GNU General Public License 3.0 it extends
+(libheif-js) follow.

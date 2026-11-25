@@ -1,0 +1,33 @@
+.errorPage {
+  display: grid;
+  min-height: 80vh;
+  align-content: center;
+  justify-items: start;
+
+  h1 {
+    margin: 0;
+    font-size: clamp(42px, 5vw, 66px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  > p {
+    color: var(--color-muted);
+  }
+
+  > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 18px;
+    color: var(--color-signal);
+  }
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

@@ -1,0 +1,151 @@
+@use '@styles/tokens.scss' as *;
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-signal);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.toolDetailHeader h1,
+.notFound h1 {
+  margin: 0;
+  font-size: clamp(42px, 5vw, 66px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.toolDetailHeader > div > p:not(.eyebrow) {
+  margin: 14px 0 0;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 15px;
+}
+
+.detailTrust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.toolDetailHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  margin-top: 36px;
+}
+
+.toolDetailHeader h1 {
+  overflow-wrap: anywhere;
+}
+
+.toolDetailHeadingRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.eyebrow.isCalibration {
+  color: var(--color-calibration);
+}
+
+.detailTrust {
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.toolInformation {
+  padding: 60px 0 45px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.toolInformation h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.toolInformation p:not(.eyebrow),
+.toolInformation li {
+  color: var(--color-muted);
+}
+
+.toolFaq {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.toolFaq h2 {
+  margin: 0 0 18px;
+  font-size: 22px;
+}
+
+.relatedTools {
+  padding-top: 40px;
+}
+
+.relatedTools > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.relatedTools a {
+  display: grid;
+  gap: 6px;
+  padding: 18px;
+  border: 1px solid var(--color-line);
+  border-radius: 5px;
+}
+
+.relatedTools a:hover {
+  border-color: var(--color-signal);
+}
+
+.relatedTools small {
+  color: var(--color-muted);
+}
+
+.notFound {
+  display: grid;
+  min-height: 80vh;
+  align-content: center;
+  justify-items: start;
+}
+
+.notFound > p {
+  color: var(--color-muted);
+}
+
+.notFound > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 18px;
+  color: var(--color-signal);
+}
+
+@media (max-width: 760px) {
+  .toolDetailHeader h1 {
+    font-size: 43px;
+  }
+
+  .toolDetailHeader {
+    margin-top: 24px;
+  }
+
+  .toolDetailHeadingRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .relatedTools > div {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,19 @@
+name: Tool request
+description: Suggest a new tool or an improvement to an existing one.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: What do you want to do?
+      description: The task, not the solution. For example "check which certificate signed a PDF".
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example input and output
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What do you use for it today?

@@ -1,0 +1,232 @@
+@use '../../../styles/tokens' as *;
+
+.inputPanel {
+  display: flex;
+  min-width: 0;
+  min-height: 520px;
+  flex-direction: column;
+
+  @include mobile {
+    min-height: 460px;
+  }
+}
+
+.inputPanelFieldsOnly {
+  @include mobile {
+    min-height: 0;
+  }
+}
+
+.panelHeading {
+  display: flex;
+  min-height: 68px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--color-line);
+
+  span {
+    color: var(--color-signal);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 2px 0 0;
+    font-family: var(--font-mono);
+    font-size: 16px;
+  }
+
+  @include mobile {
+    align-items: flex-start;
+  }
+}
+
+.panelActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  @include mobile {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+.sampleSelect {
+  min-height: 31px;
+  max-width: 150px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font: var(--font-size-sm) var(--font-mono);
+
+  @include select-control;
+}
+
+.panelBody {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  overflow: auto;
+}
+
+.primaryInput {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+
+  .editorPane {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  textarea {
+    min-height: 220px;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: 12px/1.5 var(--font-mono);
+    padding: 10px;
+    resize: vertical;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-signal);
+      outline-offset: -1px;
+    }
+  }
+}
+
+.inputStats {
+  margin-top: -8px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-align: right;
+}
+
+.runToolButton {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 18px 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--color-action, var(--color-signal));
+  color: var(--color-on-action, var(--color-void));
+  font-family: var(--font-mono);
+  font-weight: 600;
+  transition: opacity 0.15s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
+.inputPanelCompact {
+  --tool-control-height: 28px;
+  --tool-control-padding: 2px 8px;
+  --tool-control-radius: 2px;
+  --tool-label-font: var(--font-display);
+  --tool-segment-inset: 1px;
+
+  min-height: 0;
+
+  .panelHeading {
+    min-height: 34px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    padding: 3px 12px;
+
+    span {
+      color: var(--color-muted);
+      font-size: var(--font-size-2xs);
+    }
+
+    h2 {
+      @include visually-hidden;
+    }
+  }
+
+  .panelActions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+
+  .sampleSelect {
+    min-height: 26px;
+    padding-block: 2px;
+    font-family: var(--font-display);
+  }
+
+  .panelBody {
+    flex-flow: row wrap;
+    align-content: flex-start;
+    gap: 10px 12px;
+    padding: 10px 12px;
+
+    > * {
+      min-width: 0;
+      flex: 1 1 100%;
+    }
+
+    > :global(.tool-field):not(:has(textarea), :global(.tool-checkbox-group)),
+    > :global(.tool-range-field) {
+      flex: 1 1 200px;
+    }
+
+    > :global(.tool-field):has(:global(.tool-segmented-control)) {
+      flex-basis: 260px;
+    }
+  }
+
+  .primaryInput {
+    font-family: var(--font-display);
+
+    textarea {
+      min-height: clamp(110px, 34vh, 480px);
+    }
+  }
+
+  .inputStats {
+    margin-top: -6px;
+  }
+
+  .runToolButton {
+    position: sticky;
+    bottom: 8px;
+    z-index: 1;
+    min-height: 30px;
+    margin: 0 12px 12px;
+    border-radius: 2px;
+    font-family: var(--font-display);
+    font-size: var(--font-size-md);
+  }
+}
+
+.srOnly {
+  @include visually-hidden;
+}

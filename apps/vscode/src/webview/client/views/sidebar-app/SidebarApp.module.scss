@@ -1,0 +1,143 @@
+.shell {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  height: 100vh;
+  color: var(--color-text);
+  background: var(--vscode-sideBar-background, var(--color-void));
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 12px 11px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.flowBracket {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  fill: var(--color-text);
+}
+
+.flowBracketAccent {
+  fill: var(--color-signal);
+}
+
+.flowBracketCalibration {
+  fill: var(--color-calibration);
+}
+
+.brandText {
+  display: grid;
+  min-width: 0;
+
+  strong {
+    overflow: hidden;
+    font-size: var(--font-size-2xs);
+    letter-spacing: 0.14em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+.search {
+  position: relative;
+  display: block;
+  margin: 10px 10px 4px;
+
+  input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 34px;
+    padding-inline: 30px 43px;
+    border: 1px solid var(--vscode-input-border, var(--color-line));
+    border-radius: 4px;
+    color: var(--vscode-input-foreground, var(--color-text));
+    background: var(--vscode-input-background, var(--color-surface));
+    font: inherit;
+
+    &::placeholder {
+      color: var(--vscode-input-placeholderForeground, var(--color-muted));
+    }
+
+    &:focus-visible {
+      outline: 1px solid var(--color-signal);
+      outline-offset: -1px;
+    }
+  }
+
+  kbd {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    padding: 1px 5px;
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    color: var(--color-muted);
+    background: var(--color-line-soft);
+    font: var(--font-size-3xs) / 18px var(--font-mono);
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 10px;
+  color: var(--color-muted);
+  pointer-events: none;
+}
+
+.categoriesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px 4px 12px;
+}
+
+.sectionTitle {
+  color: var(--color-muted);
+  font-size: var(--font-size-3xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.toggleAll {
+  font: inherit;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--color-muted);
+  background: transparent;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-line);
+    color: var(--color-text);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: -1px;
+  }
+}
+
+.listFrame {
+  display: grid;
+  min-height: 0;
+}

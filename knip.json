@@ -1,0 +1,39 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/**/*.{js,mjs,ts}", "tests/**/*.ts"]
+    },
+    "apps/vscode": {
+      "entry": [
+        "src/extension.ts",
+        "src/webview/client/worker.ts",
+        "src/webview/client/pdfjs/pdfjsScript.ts",
+        "release/packageVerification.ts",
+        "scripts/*.{js,mjs}"
+      ],
+      "ignoreDependencies": ["@devtoolora/tools"]
+    },
+    "apps/web": {
+      "entry": ["src/worker.ts", "tests/**/*.spec.ts"],
+      "ignoreDependencies": ["@devtoolora/tools", "figlet", "pdfjs-dist"]
+    },
+    "packages/functions": {
+      "entry": ["scripts/*.mjs"],
+      "ignoreDependencies": [
+        "@tesseract.js-data/ces",
+        "@tesseract.js-data/eng",
+        "libheif-js",
+        "tesseract.js-core"
+      ]
+    },
+    "packages/tools": {
+      "ignoreDependencies": ["@devtoolora/browser-catalog"]
+    }
+  },
+  "ignoreIssues": {
+    "apps/*/src/**/index.ts": ["exports", "types"],
+    "apps/web/src/components/**/*.tsx": ["exports", "types"],
+    "packages/tool-ui/src/**/index.ts": ["exports", "types"]
+  }
+}

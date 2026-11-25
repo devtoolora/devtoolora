@@ -1,0 +1,67 @@
+.preview {
+  min-width: 0;
+  margin: 0 0 20px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.stage {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background: repeating-conic-gradient(#e2e8f0 0% 25%, #ffffff 0% 50%) 0 0 / 16px 16px;
+}
+.canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.shape,
+.handle,
+.endPoint,
+.controlPoint {
+  vector-effect: non-scaling-stroke;
+}
+.stroke {
+  fill: none;
+  stroke: #172033;
+  stroke-width: 1.5px;
+}
+.fill {
+  fill: #172033;
+  stroke: none;
+}
+.handle {
+  stroke: #64748b;
+  stroke-width: 1px;
+}
+.endPoint {
+  fill: #ffffff;
+  stroke: #2563eb;
+  stroke-width: 1.5px;
+}
+.controlPoint {
+  fill: #ffffff;
+  stroke: #e11d48;
+  stroke-width: 1.5px;
+}
+.note {
+  padding: 10px 12px;
+  margin: 0;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,33 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": [
+    ".react-router/types/**/*",
+    "src/**/*",
+    "react-router.config.ts",
+    "vite.config.ts",
+    "vite.preview.config.ts",
+    "test/**/*"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components": ["./src/components"],
+      "@components/*": ["./src/components/*"],
+      "@styles/*": ["./src/styles/*"]
+    },
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ES2022", "WebWorker"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "rootDirs": [".", "./.react-router/types"],
+    "skipLibCheck": true,
+    "strict": true,
+    "types": ["node", "vite/client"]
+  }
+}

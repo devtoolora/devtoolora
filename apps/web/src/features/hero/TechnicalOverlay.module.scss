@@ -1,0 +1,262 @@
+@use '@styles/tokens.scss' as *;
+
+.fieldEquation,
+.sampleMatrix {
+  color: rgb(139 156 175 / 76%);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xs);
+  pointer-events: none;
+}
+
+.fieldEquation {
+  position: absolute;
+}
+
+.technicalOverlay {
+  position: absolute;
+  z-index: 1;
+  inset: 64px 0 0;
+  width: 100%;
+  height: calc(100% - 64px);
+  pointer-events: none;
+}
+
+.technicalSymbol {
+  position: absolute;
+  display: block;
+  overflow: visible;
+}
+
+.overlayLines {
+  fill: none;
+  stroke: rgb(158 165 171 / 62%);
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.overlayPoints {
+  fill: rgb(54 183 255 / 84%);
+}
+
+.overlayDot {
+  fill: rgb(158 165 171 / 46%);
+}
+
+.overlayNode {
+  fill: var(--color-void);
+  stroke: rgb(158 165 171 / 68%);
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+:root[data-theme='light'] .overlayLines {
+  stroke: rgb(90 120 145 / 55%);
+}
+
+:root[data-theme='light'] .overlayPoints {
+  fill: rgb(0 109 167 / 85%);
+}
+
+:root[data-theme='light'] .overlayDot {
+  fill: rgb(90 120 145 / 45%);
+}
+
+:root[data-theme='light'] .overlayNode {
+  fill: var(--color-surface);
+  stroke: rgb(90 120 145 / 65%);
+}
+
+:root[data-theme='light'] .sampleMatrix,
+:root[data-theme='light'] .fieldEquation {
+  color: rgb(62 89 107 / 85%);
+}
+
+:root[data-theme='light'] .technicalBraces {
+  color: rgb(0 109 167 / 65%);
+}
+
+:root[data-theme='light'] .technicalDotGrid {
+  background-image: radial-gradient(rgb(70 95 118 / 32%) 1px, transparent 1px);
+}
+
+:root[data-theme='light'] .technicalWaveformBase {
+  stroke: rgb(90 120 145 / 40%);
+}
+
+:root[data-theme='light'] .technicalWaveformPulse {
+  stroke: rgb(0 109 167 / 90%);
+}
+
+.technicalSymbolConnector {
+  top: 294px;
+  left: clamp(560px, 44vw, 634px);
+  width: 104px;
+  height: 70px;
+}
+
+.technicalBraces {
+  position: absolute;
+  top: 338px;
+  left: clamp(550px, 73vw, 1050px);
+  color: rgb(158 165 171 / 62%);
+  font-family: var(--font-mono);
+  font-size: 30px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+.technicalSymbolReticle {
+  top: 274px;
+  right: 11%;
+  width: 56px;
+  height: 56px;
+}
+
+.technicalSymbolNetwork {
+  top: 520px;
+  left: clamp(32px, 5vw, 72px);
+  width: 84px;
+  height: 75px;
+}
+
+.technicalSymbolPlus {
+  width: 12px;
+  height: 12px;
+}
+
+.technicalSymbolPlusLeft {
+  top: clamp(8px, 1vw, 16px);
+  left: 22%;
+}
+
+.technicalSymbolPlusRightTop {
+  top: 22px;
+  right: 18px;
+}
+
+.technicalSymbolPlusRightBottom {
+  top: 52px;
+  right: 18px;
+}
+
+.fieldEquationSide {
+  color: rgb(139 156 175 / 85%);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.technicalReadout {
+  position: absolute;
+  display: grid;
+}
+
+.technicalReadoutLeft {
+  top: 612px;
+  left: clamp(32px, 5vw, 72px);
+  width: 104px;
+  gap: 14px;
+}
+
+.technicalReadoutRight {
+  top: 576px;
+  right: clamp(32px, 5vw, 72px);
+  width: 104px;
+  gap: 12px;
+  justify-items: center;
+}
+
+.technicalDotGrid {
+  display: block;
+  background-image: radial-gradient(circle, rgb(54 183 255 / 68%) 1px, transparent 1.3px);
+  background-size: 13px 13px;
+}
+
+.technicalReadoutLeft .technicalDotGrid {
+  width: 100%;
+  height: 42px;
+}
+
+.technicalReadoutRight .technicalDotGrid {
+  width: 52px;
+  height: 160px;
+}
+
+.sampleMatrix {
+  margin: 0;
+  line-height: 1.8;
+  white-space: pre;
+}
+
+.technicalWaveform {
+  display: block;
+  width: 100%;
+  height: 44px;
+  overflow: visible;
+}
+
+.technicalWaveformBase,
+.technicalWaveformPulse {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.technicalWaveformBase {
+  stroke: rgb(139 156 175 / 52%);
+  stroke-width: 0.8;
+}
+
+.technicalWaveformPulse {
+  stroke: #36b7ff;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-dasharray: 14 86;
+  stroke-dashoffset: 100;
+  filter: drop-shadow(0 0 4px rgb(54 183 255 / 82%));
+  animation: technical-waveform-travel 3.8s linear infinite;
+}
+
+@keyframes technical-waveform-travel {
+  from {
+    stroke-dashoffset: 100;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .technicalSymbolNetwork {
+    top: 446px;
+  }
+
+  .technicalSymbolConnector {
+    left: clamp(378px, 44vw, 431px);
+  }
+
+  .fieldEquationSide {
+    top: 550px;
+  }
+}
+
+@media (max-width: 860px) {
+  .technicalOverlay,
+  .fieldEquation {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .fieldEquation,
+  .sampleMatrix,
+  .technicalOverlay {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .technicalWaveformPulse {
+    animation: none;
+  }
+}

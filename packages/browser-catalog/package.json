@@ -1,0 +1,24 @@
+{
+  "name": "@devtoolora/browser-catalog",
+  "version": "0.1.0",
+  "description": "The tool catalog that runs in a browser worker, with its lazy loaders.",
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    "./content": "./src/content.ts",
+    "./lazy": "./src/lazy.ts",
+    "./worker": "./src/isolatedWorker.ts",
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "node ../../scripts/generate-browser-catalog-domains.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@devtoolora/core": "0.1.0",
+    "@devtoolora/tools": "0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

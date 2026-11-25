@@ -1,0 +1,78 @@
+{
+  "name": "devtoolora-monorepo",
+  "version": "0.9.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "packageManager": "npm@11.16.0",
+  "engines": {
+    "node": ">=22.22"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devtoolora/devtoolora.git"
+  },
+  "scripts": {
+    "generate": "turbo run generate",
+    "build:webview": "npm run build:webview -w devtoolora",
+    "build:vscode": "turbo run build --filter=devtoolora",
+    "dev:web": "npm run generate && npm run dev -w @devtoolora/web",
+    "preview:web": "npm run preview -w @devtoolora/web",
+    "typecheck": "turbo run typecheck && tsc -p tests",
+    "typecheck:web": "npm run typecheck -w @devtoolora/web",
+    "build:web": "turbo run build --filter=@devtoolora/web",
+    "compile": "npm run build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings 0 && node scripts/check-function-ceiling.mjs",
+    "pretest": "npm run generate",
+    "test": "vitest run",
+    "pretest:watch": "npm run generate",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:release": "vitest run --config vitest.release.config.ts",
+    "test:browser": "npm run build:web && npm run build:webview && playwright test --config playwright.browser.config.ts",
+    "build": "turbo run build",
+    "package": "npm run build:vscode && npm run package -w devtoolora --",
+    "package:verify": "npm run build:vscode && npm run verify -w devtoolora",
+    "verify": "npm run format:check && npm run lint && npm test && npm run build && npm run test:release && npm run package:verify",
+    "lint:prune": "eslint . --prune-suppressions",
+    "knip": "knip",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "prepare": "simple-git-hooks",
+    "licenses": "node scripts/third-party-licenses.mjs"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,cjs}": [
+      "prettier --write",
+      "eslint --max-warnings 0 --no-warn-ignored"
+    ],
+    "*.{json,scss,css}": "prettier --write"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^24.0.0",
+    "@vitest/coverage-v8": "^5.1.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.14.0",
+    "eslint-plugin-perfectionist": "^5.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "figlet": "^1.12.0",
+    "knip": "^6.44.1",
+    "lint-staged": "^17.6.0",
+    "pdf-lib": "^1.17.1",
+    "prettier": "^3.9.10",
+    "simple-git-hooks": "^2.14.0",
+    "turbo": "^2.11.10",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.1.0"
+  }
+}

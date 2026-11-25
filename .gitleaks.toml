@@ -1,0 +1,12 @@
+# Dev Toolora ships tools for keys, tokens and passwords, so their samples and test fixtures
+# contain throwaway keys and secrets on purpose. Everything else is still scanned.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Throwaway sample keys and tokens in tool samples and test fixtures"
+paths = [
+  '''^packages/tools/src/catalog/''',
+  '''^packages/functions/test/''',
+  '''^apps/vscode/test/''',
+]

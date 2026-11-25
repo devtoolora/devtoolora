@@ -1,0 +1,547 @@
+@use '@styles/tokens.scss' as *;
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--color-signal);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.ecosystemCopy h2 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.ecosystemCopy > p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ecosystemSection {
+  padding: 72px 0 64px;
+  border-bottom: 1px solid var(--color-line-soft);
+}
+
+.ecosystemLayout {
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  align-items: center;
+  gap: 84px;
+}
+
+.ecosystemCopy > p {
+  margin-top: 20px;
+}
+
+.outlineAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  min-height: 42px;
+  margin-top: 24px;
+  padding: 0 14px;
+  border: 1px solid var(--color-signal);
+  border-radius: 6px;
+  color: var(--color-signal);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+}
+
+.outlineAction:hover {
+  background: var(--color-signal-soft);
+}
+
+.surfaceDiagram {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) minmax(104px, 0.8fr) minmax(130px, 1fr) minmax(
+      130px,
+      1fr
+    );
+  align-items: start;
+  gap: 20px;
+}
+
+.surfaceDiagram::before {
+  position: absolute;
+  top: 76px;
+  right: 12%;
+  left: 12%;
+  z-index: 0;
+  height: 2px;
+  background-image: radial-gradient(circle, rgb(54 183 255 / 70%) 1.2px, transparent 1.5px);
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+  content: '';
+}
+
+.surfaceItem {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  min-width: 0;
+  gap: 10px;
+  text-align: center;
+}
+
+.surfaceItem strong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.surfaceCoreSpacer {
+  display: block;
+  height: 20px;
+}
+
+.surfaceWeb > strong,
+.surfaceVscode > strong {
+  color: var(--color-signal);
+}
+
+.surfaceDesktop > strong {
+  color: var(--color-calibration);
+}
+
+.surfaceWindow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(100%, 152px);
+  height: 102px;
+  padding: 24px 14px 14px;
+  border-radius: 6px;
+  background: rgb(8 20 32 / 82%);
+  box-shadow: 0 16px 36px var(--color-shadow);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.surfaceWeb .surfaceWindow {
+  border: 1px solid rgb(54 183 255 / 42%);
+}
+
+.surfaceDesktop .surfaceWindow {
+  border: 1px solid rgb(255 138 52 / 42%);
+}
+
+.surfaceVscode .surfaceWindow {
+  border: 1px solid rgb(54 183 255 / 42%);
+}
+
+.surfaceWeb:hover .surfaceWindow {
+  transform: translateY(-2px);
+  border-color: var(--color-signal);
+  box-shadow: 0 20px 42px rgb(54 183 255 / 20%);
+}
+
+.surfaceDesktop:hover .surfaceWindow {
+  transform: translateY(-2px);
+  border-color: var(--color-calibration);
+  box-shadow: 0 20px 42px rgb(255 138 52 / 20%);
+}
+
+.surfaceVscode:hover .surfaceWindow {
+  transform: translateY(-2px);
+  border-color: var(--color-signal);
+  box-shadow: 0 20px 42px rgb(54 183 255 / 20%);
+}
+
+.windowDots {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  color: rgb(139 156 175 / 55%);
+  font-size: var(--font-size-2xs);
+  letter-spacing: -0.05em;
+  user-select: none;
+}
+
+.windowEditor {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+}
+
+.windowLine {
+  display: block;
+  width: 65%;
+  height: 1px;
+  background: var(--color-line);
+  border-radius: 1px;
+}
+
+.windowLine.short {
+  width: 44%;
+}
+
+.windowLine.tiny {
+  width: 26%;
+}
+
+.windowVscodeLayout {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.vscodeActivityBar {
+  display: grid;
+  gap: 4px;
+  padding-right: 4px;
+  border-right: 1px solid var(--color-line-soft);
+}
+
+.vscodeActivityBar span {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: rgb(54 183 255 / 40%);
+}
+
+.vscodeActivityBar span:first-child {
+  background: var(--color-signal);
+}
+
+.windowBadge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 5px;
+  transition: transform 0.2s ease;
+}
+
+.windowBadge.isSignal {
+  border: 1px solid rgb(54 183 255 / 35%);
+  background: rgb(54 183 255 / 12%);
+  color: var(--color-signal);
+}
+
+.windowBadge.isCalibration {
+  border: 1px solid rgb(255 138 52 / 35%);
+  background: rgb(255 138 52 / 12%);
+  color: var(--color-calibration);
+}
+
+.surfaceItem:hover .windowBadge {
+  transform: scale(1.08);
+}
+
+.sharedCore {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 102px;
+  height: 102px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-void);
+}
+
+.coreOrbit {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.coreOrbit.outer {
+  inset: 0;
+  border: 1px dashed rgb(54 183 255 / 36%);
+  animation: core-orbit-spin 32s linear infinite;
+}
+
+.coreOrbit.inner {
+  inset: 12px;
+  border: 1px dashed rgb(54 183 255 / 22%);
+  animation: core-orbit-spin-rev 20s linear infinite;
+}
+
+@keyframes core-orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes core-orbit-spin-rev {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.coreCenter {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 1px solid rgb(54 183 255 / 55%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(54 183 255 / 18%) 0%, rgb(16 33 59 / 92%) 75%);
+  box-shadow:
+    0 0 24px rgb(54 183 255 / 22%),
+    inset 0 0 12px rgb(54 183 255 / 15%);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.surfaceCore:hover .coreCenter {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 32px rgb(54 183 255 / 36%),
+    inset 0 0 16px rgb(54 183 255 / 25%);
+}
+
+.surfaceItem small {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  line-height: 1.45;
+}
+
+:root[data-theme='light'] .surfaceWindow {
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgb(29 53 68 / 12%);
+}
+
+:root[data-theme='light'] .surfaceWeb .surfaceWindow,
+:root[data-theme='light'] .surfaceVscode .surfaceWindow {
+  border-color: rgb(0 109 167 / 32%);
+}
+
+:root[data-theme='light'] .surfaceDesktop .surfaceWindow {
+  border-color: rgb(189 79 9 / 32%);
+}
+
+:root[data-theme='light'] .windowBadge.isSignal {
+  border-color: rgb(0 109 167 / 24%);
+  background: rgb(0 109 167 / 8%);
+  color: #00639a;
+}
+
+:root[data-theme='light'] .windowBadge.isCalibration {
+  border-color: rgb(189 79 9 / 24%);
+  background: rgb(189 79 9 / 8%);
+  color: #ad4808;
+}
+
+:root[data-theme='light'] .coreCenter {
+  background: radial-gradient(circle, rgb(0 109 167 / 12%) 0%, #ffffff 80%);
+  border-color: rgb(0 109 167 / 35%);
+  box-shadow: 0 0 24px rgb(0 109 167 / 15%);
+}
+
+:root[data-theme='light'] .surfaceDiagram::before {
+  background-image: radial-gradient(circle, rgb(0 109 167 / 50%) 1.2px, transparent 1.5px);
+}
+
+@media (max-width: 980px) {
+  .ecosystemCopy h2 {
+    font-size: 26px;
+  }
+
+  .ecosystemLayout {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .ecosystemSection {
+    padding: 44px 0 40px;
+  }
+
+  .ecosystemCopy > p {
+    margin-top: 14px;
+  }
+
+  .ecosystemCopy .outlineAction {
+    min-height: 38px;
+    margin-top: 16px;
+  }
+
+  .surfaceDiagram {
+    gap: 12px;
+  }
+
+  .surfaceWindow {
+    width: min(100%, 120px);
+    padding: 20px 18px 15px;
+  }
+
+  .sharedCore {
+    width: 74px;
+    height: 74px;
+  }
+}
+
+@media (max-width: 760px) {
+  .ecosystemSection {
+    padding: 44px 0 36px;
+  }
+
+  .ecosystemLayout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .ecosystemCopy {
+    text-align: center;
+  }
+
+  .ecosystemCopy .eyebrow {
+    margin-bottom: 8px;
+  }
+
+  .ecosystemCopy h2 {
+    font-size: 28px;
+    line-height: 1.15;
+  }
+
+  .ecosystemCopy > p {
+    max-width: 380px;
+    margin: 12px auto 0;
+    font-size: 15px;
+  }
+
+  .ecosystemCopy .outlineAction {
+    display: inline-flex;
+    margin: 20px auto 0;
+  }
+
+  .surfaceDiagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    position: relative;
+    padding: 16px 0;
+    width: 100%;
+  }
+
+  .surfaceDiagram::before {
+    display: block;
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    left: 50%;
+    right: auto;
+    width: 2px;
+    height: auto;
+    transform: translateX(-50%);
+    background-image: radial-gradient(circle, var(--color-signal) 1.2px, transparent 1.5px);
+    background-size: 2px 10px;
+    background-repeat: repeat-y;
+    content: '';
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  :root[data-theme='light'] .surfaceDiagram::before {
+    background-image: radial-gradient(circle, rgb(0 109 167 / 50%) 1.2px, transparent 1.5px);
+  }
+
+  .surfaceItem {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 260px;
+    gap: 10px;
+  }
+
+  .surfaceItem strong {
+    background: var(--color-void);
+    padding: 2px 10px;
+    border-radius: 4px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .surfaceItem small {
+    background: var(--color-void);
+    padding: 2px 10px;
+    border-radius: 4px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .surfaceCore {
+    max-width: 180px;
+    gap: 10px;
+  }
+
+  .surfaceCore .surfaceCoreSpacer {
+    display: none;
+  }
+
+  .surfaceWindow {
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 1.55 / 1;
+    min-height: 120px;
+    padding: 16px 14px 14px;
+    margin-inline: auto;
+    background: var(--color-void);
+    position: relative;
+    z-index: 2;
+  }
+
+  :root[data-theme='light'] .surfaceWindow,
+  :root[data-theme='light'] .surfaceItem strong,
+  :root[data-theme='light'] .surfaceItem small {
+    background: var(--color-void);
+  }
+
+  .sharedCore {
+    width: 80px;
+    height: 80px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 460px) {
+  .surfaceWindow {
+    max-width: 220px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coreOrbit.outer,
+  .coreOrbit.inner {
+    animation: none;
+  }
+}

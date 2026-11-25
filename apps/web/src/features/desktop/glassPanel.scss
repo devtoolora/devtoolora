@@ -1,0 +1,10 @@
+// Liquid Glass look for the desktop chrome panels; the --glass-* tokens come from DesktopApp.
+@mixin glass-panel {
+  :root[data-surface='glass'][data-theme] & {
+    background: var(--glass-panel);
+    box-shadow:
+      inset 0 1px 0 var(--glass-rim),
+      0 10px 34px var(--glass-shadow);
+    backdrop-filter: blur(18px) saturate(150%);
+  }
+}

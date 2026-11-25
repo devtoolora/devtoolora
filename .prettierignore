@@ -1,0 +1,24 @@
+# Prettier also reads .gitignore; these are extra exclusions.
+**/*.generated.*
+apps/desktop/src-tauri/gen/
+package-lock.json
+**/*.md
+**/*.html
+**/*.svg
+**/*.xml
+**/*.yml
+**/*.webmanifest
+docs/
+.claude/
+.playwright-mcp/
+.superpowers/
+**/dist/
+**/out/
+**/build/
+**/.react-router/
+apps/desktop/src-tauri/target/
+test-results/
+playwright-report/
+.turbo/
+node_modules/
+eslint-suppressions.json

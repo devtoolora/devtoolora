@@ -1,0 +1,26 @@
+{
+  "name": "@devtoolora/tools",
+  "version": "0.1.0",
+  "description": "Portable tool definitions and implementations.",
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    ".": "./src/index.ts",
+    "./catalog/content.generated": "./src/catalog/content.generated.ts",
+    "./catalog/*": "./src/catalog/*/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "generate": "node ../../scripts/generate-tool-content-loaders.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@devtoolora/core": "0.1.0",
+    "@devtoolora/functions": "0.1.0"
+  },
+  "devDependencies": {
+    "fflate": "^0.8.3",
+    "pdf-lib": "^1.17.1",
+    "typescript": "^5.8.0"
+  }
+}

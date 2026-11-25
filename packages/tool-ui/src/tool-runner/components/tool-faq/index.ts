@@ -1,0 +1,1 @@
+export { ToolFaq } from './ToolFaq';

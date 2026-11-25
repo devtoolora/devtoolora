@@ -1,0 +1,78 @@
+@use '@styles/tokens.scss' as *;
+
+.filters {
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  padding: 8px 0;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-surface);
+
+  @include tablet {
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    padding: 6px;
+    gap: 6px;
+  }
+}
+
+.button {
+  display: grid;
+  grid-template-columns: 25px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 16px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-muted);
+  text-align: left;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  @include focus-ring;
+
+  &:hover,
+  &.isActive {
+    color: var(--color-signal);
+    background: var(--color-signal-soft);
+  }
+
+  &.isActive {
+    box-shadow: inset 2px 0 var(--color-signal);
+  }
+
+  span:not(.count) {
+    @include truncate;
+  }
+
+  @include tablet {
+    display: flex;
+    width: auto;
+    min-width: max-content;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 8px 14px;
+
+    &.isActive {
+      border-color: var(--color-signal);
+      box-shadow: none;
+    }
+  }
+}
+
+.count {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xs);
+
+  @include tablet {
+    display: none;
+  }
+}

@@ -1,0 +1,180 @@
+.preview {
+  min-width: 0;
+  margin: 0 0 20px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.heading > h3 {
+  margin: 0;
+  font-size: inherit;
+}
+.heading > span,
+.caption {
+  color: var(--color-muted);
+}
+.heading > span {
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.viewport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-width: 0;
+  min-height: 400px;
+  padding: 20px;
+  background: var(--color-void);
+}
+.viewport > p {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+.plot {
+  flex: 1 1 420px;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  // A handle dragged past the frozen range must not paint over the heading.
+  overflow: hidden;
+  font-family: var(--font-mono);
+  user-select: none;
+}
+.band {
+  fill: color-mix(in srgb, var(--color-signal) 6%, transparent);
+  stroke: var(--color-line-soft);
+  stroke-dasharray: 3 3;
+}
+.unit {
+  fill: var(--color-surface);
+  stroke: var(--color-line);
+}
+.guide {
+  stroke: var(--color-line);
+}
+.linear {
+  stroke: var(--color-muted);
+  stroke-dasharray: 4 4;
+  opacity: 0.7;
+}
+.tick,
+.axis {
+  fill: var(--color-muted);
+  // viewBox units: the plot scales up to 1.5x, so this reads as 9-13.5 px.
+  font-size: 9px;
+}
+.axis {
+  letter-spacing: 0.04em;
+}
+.arm {
+  stroke: var(--color-calibration);
+  stroke-width: 1.5;
+}
+.curve {
+  fill: none;
+  stroke: var(--color-signal);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.handle {
+  outline: none;
+  cursor: grab;
+  touch-action: none;
+}
+.handle:active {
+  cursor: grabbing;
+}
+.hitArea {
+  fill: transparent;
+}
+.focusRing {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 2;
+}
+.handle:focus-visible .focusRing {
+  stroke: var(--color-signal);
+}
+.knob {
+  fill: var(--color-calibration);
+  stroke: var(--color-void);
+  stroke-width: 2;
+}
+.handle:hover .knob,
+.handle:focus-visible .knob {
+  fill: var(--color-signal);
+}
+.motion {
+  display: grid;
+  flex: 1 1 220px;
+  gap: 14px;
+  justify-items: start;
+  min-width: 0;
+  max-width: 420px;
+}
+.motion > p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+.lanes {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 10px 12px;
+  width: 100%;
+  color: var(--color-muted);
+  font: 11px var(--font-mono);
+}
+.track {
+  position: relative;
+  height: 32px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-surface);
+}
+.runner {
+  position: absolute;
+  inset: 3px 27px 3px 3px;
+}
+.block,
+.ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+}
+.block {
+  background: var(--color-signal);
+}
+.ghost {
+  border: 1px dashed var(--color-muted);
+  background: color-mix(in srgb, var(--color-muted) 18%, transparent);
+}
+.caption {
+  padding: 10px 12px;
+  margin: 0;
+  border-top: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+@media (max-width: 480px) {
+  .heading > span {
+    flex-basis: 100%;
+  }
+}

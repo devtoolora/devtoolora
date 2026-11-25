@@ -1,0 +1,65 @@
+@use '@styles/tokens.scss' as *;
+
+.badge {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid var(--color-line);
+  border-radius: 7px;
+  background: var(--color-surface);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+
+  @include mobile {
+    width: 45px;
+    height: 45px;
+  }
+
+  &.isSignal {
+    color: var(--color-signal);
+    border-color: color-mix(in srgb, var(--color-signal) 38%, var(--color-line));
+    background: color-mix(in srgb, var(--color-signal) 8%, var(--color-surface));
+  }
+
+  &.isCalibration {
+    color: var(--color-calibration);
+    border-color: color-mix(in srgb, var(--color-calibration) 38%, var(--color-line));
+    background: color-mix(in srgb, var(--color-calibration) 8%, var(--color-surface));
+  }
+}
+
+.glyph {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &.isSignal {
+    color: var(--color-signal);
+  }
+
+  &.isCalibration {
+    color: var(--color-calibration);
+  }
+
+  &.wrapperCompact {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.wrapperCompact .glyph {
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}

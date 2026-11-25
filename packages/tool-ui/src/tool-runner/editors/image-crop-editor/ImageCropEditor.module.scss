@@ -1,0 +1,116 @@
+.sourcePreview {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-soft);
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 12px;
+  position: relative;
+}
+
+.hint {
+  color: var(--color-muted);
+  font-size: var(--font-size-xs, 12px);
+  font-weight: 500;
+}
+
+.cropStage {
+  border-radius: 6px;
+  display: inline-block;
+  justify-self: center;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+}
+
+.sourceImage {
+  display: block;
+  max-height: 360px;
+  max-width: 100%;
+  object-fit: contain;
+
+  &.colorPicker {
+    cursor: crosshair;
+  }
+}
+
+.cropBox {
+  background: color-mix(in srgb, var(--color-signal) 16%, transparent);
+  border: 2px solid var(--color-signal);
+  box-shadow: 0 0 0 9999px color-mix(in srgb, #000 42%, transparent);
+  cursor: move;
+  padding: 0;
+  position: absolute;
+  touch-action: none;
+
+  &:focus-visible {
+    outline: 2px dashed #fff;
+    outline-offset: -6px;
+  }
+
+  &::after {
+    background: var(--color-signal);
+    border: 1px solid #fff;
+    border-radius: 2px;
+    bottom: -5px;
+    content: '';
+    cursor: nwse-resize;
+    height: 10px;
+    position: absolute;
+    right: -5px;
+    width: 10px;
+  }
+}
+
+.watermarkPreview {
+  color: #fff;
+  font-weight: 800;
+  left: 50%;
+  line-height: 1;
+  max-width: 90%;
+  padding: 4px 8px;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 65%);
+  top: 50%;
+  translate: -50% -50%;
+  white-space: nowrap;
+
+  &[data-position='top-left'] {
+    left: 12px;
+    top: 12px;
+    translate: 0 0;
+  }
+
+  &[data-position='top-right'] {
+    left: auto;
+    right: 12px;
+    top: 12px;
+    translate: 0 0;
+  }
+
+  &[data-position='bottom-left'] {
+    bottom: 12px;
+    left: 12px;
+    top: auto;
+    translate: 0 0;
+  }
+
+  &[data-position='bottom-right'] {
+    bottom: 12px;
+    left: auto;
+    right: 12px;
+    top: auto;
+    translate: 0 0;
+  }
+}
+
+.cropActions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 4px;
+}

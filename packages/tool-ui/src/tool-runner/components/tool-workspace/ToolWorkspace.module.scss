@@ -1,0 +1,130 @@
+@use '../../../styles/tokens' as *;
+
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 36px;
+  border: 1px solid var(--color-line);
+  border-radius: 7px;
+  overflow: hidden;
+  background: color-mix(in srgb, color-mix(in srgb, var(--color-void), black 20%) 80%, transparent);
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+:root[data-theme='light'] .workspace {
+  background: var(--color-surface);
+}
+
+.workspaceLoading {
+  margin-top: 36px;
+  padding: 90px;
+  border: 1px solid var(--color-line);
+  color: var(--color-muted);
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+.workspaceFailure {
+  margin-top: 36px;
+  padding: 46px;
+  border: 1px solid var(--color-calibration);
+  border-radius: 6px;
+  background: rgb(255 138 52 / 6%);
+
+  h2 {
+    margin: 0;
+  }
+
+  p:not(.eyebrow) {
+    color: var(--color-muted);
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-signal);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.runtimeUnavailable {
+  margin-top: 36px;
+}
+
+.runtimeNote {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+}
+
+// The desktop app's tool stage. Selectors keep the specificity they had in the desktop panel.
+.workspace.desktop {
+  flex: 1;
+  min-height: 520px;
+  margin: 14px 16px;
+}
+
+.desktop {
+  :global(.workspace-panel) {
+    min-height: 520px;
+  }
+
+  :global(.panel-body) {
+    scrollbar-color: var(--color-line) transparent;
+  }
+
+  :global(.native-file-button) {
+    min-height: 38px;
+    border: 1px solid var(--color-line);
+    border-radius: 4px;
+    cursor: pointer;
+    background: var(--color-surface-strong);
+    color: var(--color-text);
+    font: var(--font-size-xs) var(--font-mono);
+  }
+
+  :global(.tool-file-field) {
+    padding: 10px;
+    border: 1px dashed var(--color-line);
+    border-radius: 5px;
+
+    &:has(:global(.native-file-button):hover) {
+      border-color: var(--color-signal);
+    }
+  }
+
+  :global(.selected-file-name) {
+    color: var(--color-signal);
+  }
+}
+
+// --glass-* come from the desktop app's glass surface. Light theme below wins on background.
+:global(:root[data-surface='glass'][data-theme]) .desktop {
+  border-radius: 14px;
+  background: var(--glass-panel);
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim),
+    0 10px 34px var(--glass-shadow);
+  backdrop-filter: blur(18px) saturate(150%);
+}
+
+:global(:root[data-theme='light']) .workspace.desktop {
+  background: var(--color-surface);
+}
+
+@media (max-width: 780px) {
+  .workspace.desktop {
+    margin-inline: 10px;
+  }
+}

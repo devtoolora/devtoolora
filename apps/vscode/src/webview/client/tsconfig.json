@@ -1,0 +1,17 @@
+{
+  "extends": "../../../../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ES2022", "WebWorker"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "types": ["node", "vite/client"]
+  },
+  "include": [
+    "./**/*.tsx",
+    "./assets.d.ts",
+    "../../../test/browser/**/*",
+    "../../../test/webview/**/*"
+  ]
+}

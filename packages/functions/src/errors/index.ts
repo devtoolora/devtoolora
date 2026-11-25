@@ -1,0 +1,1 @@
+export { FunctionError } from './FunctionError';

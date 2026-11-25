@@ -1,0 +1,39 @@
+.preview {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+}
+.preview h3 {
+  margin: 0 0 14px;
+  font-size: 14px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.stage {
+  display: grid;
+  place-items: center;
+  min-height: 340px;
+  margin-top: 14px;
+  overflow: auto;
+  background: var(--color-surface);
+}
+.card {
+  display: grid;
+  place-items: center;
+  width: 180px;
+  height: 100px;
+  border: 1px solid var(--color-signal);
+  border-radius: 8px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  font: 600 14px var(--font-mono);
+}
+.preview p {
+  color: var(--color-muted);
+  font: 11px var(--font-mono);
+  line-height: 1.6;
+}

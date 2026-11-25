@@ -1,0 +1,55 @@
+@use '@styles/tokens.scss' as *;
+
+.favoriteButton {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-muted);
+  transition:
+    color 0.16s ease,
+    transform 0.16s ease,
+    background-color 0.16s ease;
+
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-text);
+    background: var(--color-signal-soft);
+  }
+
+  &.isFavorite {
+    color: var(--color-signal);
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
+
+.sm {
+  width: 32px;
+  height: 32px;
+}
+
+.md {
+  width: 36px;
+  height: 36px;
+}
+
+.lg {
+  width: 44px;
+  height: 44px;
+}
+
+.outline {
+  border: 1px solid var(--color-line);
+  border-radius: 5px;
+}

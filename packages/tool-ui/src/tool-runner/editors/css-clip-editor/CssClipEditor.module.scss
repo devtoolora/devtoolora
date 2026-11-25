@@ -1,0 +1,167 @@
+@use '../../../styles/tokens' as *;
+
+.editor {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+}
+.editor header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+}
+.editor p,
+.imagePicker {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.canvas {
+  position: relative;
+  width: calc(100% - 32px);
+  aspect-ratio: 1;
+  margin: 28px 16px;
+  outline: 1px dashed var(--color-line);
+  background: var(--color-surface);
+  touch-action: none;
+}
+.layer {
+  position: absolute;
+  inset: 0;
+}
+.outside {
+  opacity: 0.22;
+  pointer-events: none;
+}
+.movable {
+  cursor: move;
+  touch-action: none;
+}
+.gradient {
+  background: linear-gradient(135deg, var(--color-signal), var(--color-calibration));
+}
+.checkerboard {
+  background: repeating-conic-gradient(var(--color-signal) 0 25%, var(--color-surface) 0 50%) 0 0 /
+    12.5% 12.5%;
+}
+.stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--color-signal) 0 6%,
+    var(--color-calibration) 6% 12%
+  );
+}
+.grid {
+  background:
+    linear-gradient(var(--color-void) 1px, transparent 1px) 0 0 / 10% 10%,
+    linear-gradient(90deg, var(--color-void) 1px, transparent 1px) 0 0 / 10% 10%,
+    var(--color-signal);
+}
+.photo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+  gap: 6px;
+  margin: 10px 0;
+}
+.preset {
+  display: grid;
+  aspect-ratio: 1;
+  padding: 4px;
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  background: var(--color-surface);
+  cursor: pointer;
+}
+.preset:hover,
+.preset:focus-visible {
+  border-color: var(--color-signal);
+  outline: none;
+}
+.preset span {
+  display: block;
+  background: var(--color-signal);
+}
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.options select {
+  padding-left: 8px;
+  min-height: 28px;
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+
+  @include select-control;
+}
+.handle {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid var(--color-void);
+  border-radius: 50%;
+  color: var(--color-void);
+  background: var(--color-signal);
+  font: 700 11px var(--font-mono);
+  transform: translate(-50%, -50%);
+  touch-action: none;
+  cursor: grab;
+}
+.handle[aria-pressed='true'] {
+  background: var(--color-calibration);
+}
+.handle:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+}
+.handle:active {
+  cursor: grabbing;
+}
+.coordinates {
+  font-variant-numeric: tabular-nums;
+}
+.imagePicker {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin-top: 14px;
+}
+.imagePicker input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  font-size: 11px;
+}
+.error {
+  padding: 20px;
+  color: var(--color-calibration);
+}

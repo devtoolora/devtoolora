@@ -1,0 +1,87 @@
+/* Maps VS Code theme variables onto the tool-ui token contract (packages/tool-ui/README.md). */
+/* The host marks the theme kind on body; native controls (scrollbars, selects) follow it, not the OS. */
+body.vscode-light,
+body.vscode-high-contrast-light {
+  color-scheme: light;
+}
+
+body.vscode-dark,
+body.vscode-high-contrast {
+  color-scheme: dark;
+}
+
+:root {
+  --border: var(
+    --vscode-panel-border,
+    color-mix(in srgb, var(--vscode-foreground) 16%, transparent)
+  );
+  --muted: var(
+    --vscode-descriptionForeground,
+    color-mix(in srgb, var(--vscode-foreground) 70%, transparent)
+  );
+  --accent: var(--vscode-focusBorder, #36b7ff);
+  --panel: var(--vscode-editor-background);
+  --surface-raised: color-mix(in srgb, var(--panel) 93%, var(--vscode-sideBar-background));
+  --soft: color-mix(in srgb, var(--vscode-foreground) 5%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent) 13%, transparent);
+
+  --color-void: var(--vscode-sideBar-background);
+  --color-surface: var(--panel);
+  --color-surface-strong: var(--surface-raised);
+  --color-line: var(--border);
+  --color-line-soft: var(--soft);
+  --color-text: var(--vscode-foreground);
+  --color-muted: var(--muted);
+  --color-signal: var(--accent);
+  --color-signal-soft: var(--accent-soft);
+  --color-action: var(--vscode-button-background, var(--accent));
+  --color-on-action: var(--vscode-button-foreground, var(--vscode-foreground));
+  --color-calibration: #ff8a34;
+  --color-shadow: transparent;
+
+  --font-display: var(--vscode-font-family, system-ui, sans-serif);
+  --font-mono: var(--vscode-editor-font-family, Menlo, Monaco, monospace);
+  --font-size-3xs: 10px;
+  --font-size-2xs: 11px;
+  --font-size-xs: 12px;
+  --font-size-sm: 12.5px;
+  --font-size-md: 13px;
+  --font-size-base: 13px;
+  --font-size-lg: 15px;
+  --font-size-xl: 18px;
+}
+
+/* Shared tool-ui controls size with width: 100% and padding, like on the web. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body[data-mode='editor'],
+body[data-mode='sidebar'] {
+  margin: 0;
+  color: var(--vscode-foreground);
+  font: 13px/1.4 var(--font-display);
+}
+
+body[data-mode='editor'] {
+  background: var(--vscode-editor-background);
+}
+
+body[data-mode='sidebar'] {
+  background: var(--vscode-sideBar-background);
+}
+
+body[data-mode='editor'] [hidden],
+body[data-mode='sidebar'] [hidden] {
+  display: none !important;
+}
+
+@media (forced-colors: active) {
+  body[data-mode='editor'],
+  body[data-mode='sidebar'] {
+    --color-line: CanvasText;
+    --color-signal: Highlight;
+  }
+}

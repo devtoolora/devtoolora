@@ -1,0 +1,132 @@
+.controls,
+.shadowControls {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.layerHeading,
+.layerActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.layerHeading {
+  justify-content: space-between;
+  font-size: 13px;
+}
+.layer {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+}
+.layer legend {
+  padding: 0 6px;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.colorControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+.colorControl input {
+  width: 80px;
+  height: 32px;
+  padding: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+.insetControl {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.insetControl input {
+  width: auto;
+  accent-color: var(--color-signal);
+}
+.advanced {
+  min-width: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+.advanced summary {
+  cursor: pointer;
+}
+.advanced label {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+.advanced textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  border-radius: 5px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  font-family: var(--font-mono);
+}
+.error {
+  color: var(--color-calibration);
+  font-size: 12px;
+}
+.stopStrip {
+  padding: 4px 12px;
+}
+.stopTrack {
+  position: relative;
+  height: 32px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: repeating-conic-gradient(var(--color-line) 0% 25%, var(--color-surface) 0% 50%) 0 0 /
+    12px 12px;
+}
+.stopFill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.stopMarker {
+  position: absolute;
+  top: 50%;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background:
+    linear-gradient(var(--stop-color), var(--stop-color)),
+    repeating-conic-gradient(var(--color-line) 0% 25%, var(--color-surface) 0% 50%) 50% / 8px 8px;
+  border: 2px solid var(--color-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--color-text);
+  transform: translate(-50%, -50%);
+  touch-action: none;
+  cursor: grab;
+}
+.stopMarker:active {
+  cursor: grabbing;
+}
+.stopMarker:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+.colorControl input::-webkit-color-swatch,
+.colorControl input::-moz-color-swatch {
+  border: none;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px var(--color-muted);
+}

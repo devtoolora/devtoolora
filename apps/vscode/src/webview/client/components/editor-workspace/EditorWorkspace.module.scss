@@ -1,0 +1,11 @@
+.workspace {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  min-height: 100vh;
+  background: var(--color-void);
+}
+
+:global(body.is-resizing-editor-split) {
+  cursor: col-resize;
+  user-select: none;
+}

@@ -1,0 +1,95 @@
+@use '@styles/tokens.scss' as *;
+
+.search {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 9px;
+  height: 38px;
+  padding-inline: 12px 8px;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-muted);
+
+  &:focus-within {
+    border-color: var(--color-signal);
+    box-shadow: 0 0 0 2px var(--color-signal-soft);
+  }
+
+  input {
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: var(--font-size-xs) var(--font-mono);
+  }
+
+  kbd {
+    padding: 2px 6px;
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    color: var(--color-muted);
+    font: var(--font-size-2xs) var(--font-mono);
+  }
+}
+
+.results {
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  left: 0;
+  z-index: 30;
+  padding: 7px;
+  border: 1px solid var(--color-line);
+  border-radius: 7px;
+  background: var(--color-menu, var(--color-surface));
+  box-shadow: 0 18px 50px var(--color-shadow);
+
+  button {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--color-text);
+    text-align: left;
+
+    &:hover,
+    &[data-active='true'] {
+      background: var(--color-signal-soft);
+    }
+
+    > span {
+      color: var(--color-signal);
+      font: var(--font-size-xs) var(--font-mono);
+    }
+
+    strong {
+      font: var(--font-size-xs) var(--font-mono);
+    }
+
+    small {
+      color: var(--color-muted);
+      font: var(--font-size-2xs) var(--font-mono);
+      text-transform: uppercase;
+    }
+  }
+
+  p {
+    margin: 12px;
+    color: var(--color-muted);
+    font: var(--font-size-xs) var(--font-mono);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search * {
+    transition: none;
+  }
+}

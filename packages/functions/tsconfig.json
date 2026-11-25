@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts", "src/schema/*.generated.js", "test/**/*.ts"]
+}

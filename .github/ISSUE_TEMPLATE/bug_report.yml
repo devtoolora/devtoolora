@@ -1,0 +1,43 @@
+name: Bug report
+description: A tool gives a wrong result, crashes or behaves unexpectedly.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not paste real secrets, keys or private data. Use a made-up example that shows the problem.
+  - type: input
+    id: tool
+    attributes:
+      label: Tool
+      placeholder: JSON Formatter
+    validations:
+      required: true
+  - type: dropdown
+    id: product
+    attributes:
+      label: Where does it happen?
+      multiple: true
+      options:
+        - Web
+        - VS Code extension
+        - Desktop app
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version, browser or OS
+      placeholder: 1.0.0, Chrome 140 on macOS
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps and input
+      description: The input you used and what you clicked.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect, and what happened instead?
+    validations:
+      required: true

@@ -1,0 +1,135 @@
+name: CI artifacts
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  quality:
+    runs-on: ubuntu-22.04
+    env:
+      SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - uses: actions/cache@v6
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-${{ github.job }}-${{ github.sha }}
+          restore-keys: turbo-${{ runner.os }}-${{ github.job }}-
+      - run: npm run format:check
+      # Typecheck runs the generators first; type-aware lint needs the generated files.
+      - run: npm run typecheck
+      - run: npm run lint
+        env:
+          # Type-aware lint over the whole catalog outgrows the default heap on the runner.
+          NODE_OPTIONS: --max-old-space-size=4096
+      - run: npm run knip
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      # Runs on a cache hit too: the system deps come from apt.
+      - run: npx playwright install --with-deps chromium
+      # Release tests read out/web and apps/vscode/dist; build them first.
+      - run: npm run build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: vscode-dist
+          path: apps/vscode/dist
+          if-no-files-found: error
+          retention-days: 1
+      - run: npm run test:coverage
+      - run: npm run test:release
+      - run: npx playwright test --config playwright.browser.config.ts
+      - run: npm run package:verify
+      - uses: actions/upload-artifact@v7
+        with:
+          name: web-pwa
+          path: out/web
+          if-no-files-found: error
+          retention-days: 1
+
+  vsix:
+    needs: quality
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      # vsce still needs node_modules; the extension build comes from the quality job.
+      - run: npm ci
+      - uses: actions/download-artifact@v8
+        with:
+          name: vscode-dist
+          path: apps/vscode/dist
+      - name: Package and verify VSIX
+        run: |
+          npm run package -w devtoolora
+          node apps/vscode/scripts/verify-package.js --vsix devtoolora.vsix
+      - uses: actions/upload-artifact@v7
+        with:
+          name: vsix
+          path: devtoolora.vsix
+          if-no-files-found: error
+          retention-days: 1
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [quality, vsix]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check that the tag matches every package version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          for file in package.json apps/vscode/package.json; do
+            actual="$(node -p "require('./$file').version")"
+            if [ "$actual" != "$version" ]; then
+              echo "::error file=$file::version $actual does not match tag $GITHUB_REF_NAME"
+              exit 1
+            fi
+          done
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+      - name: Create a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v version="$version" '
+            index($0, "## " version) == 1 { found = 1; next }
+            found && /^## / { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "::error file=CHANGELOG.md::no section for $version"
+            exit 1
+          fi
+          (cd artifacts && zip -qr "../devtoolora-web-$GITHUB_REF_NAME.zip" web-pwa)
+          mapfile -t files < <(find artifacts -type f \( -name '*.vsix' -o -name '*.dmg' -o -name '*.msi' \
+            -o -name '*-setup.exe' -o -name '*.AppImage' -o -name '*.deb' -o -name '*.rpm' \))
+          gh release create "$GITHUB_REF_NAME" --draft --title "Dev Toolora $version" \
+            --notes-file release-notes.md "devtoolora-web-$GITHUB_REF_NAME.zip" "${files[@]}"

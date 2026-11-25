@@ -1,0 +1,17 @@
+{
+  "name": "@devtoolora/core",
+  "version": "0.1.0",
+  "description": "Shared tool contracts and registry validation.",
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    ".": "./src/index.ts",
+    "./context": "./src/contextDetection.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

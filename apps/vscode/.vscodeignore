@@ -1,0 +1,11 @@
+**
+!package.json
+!README.md
+!LICENSE
+!CHANGELOG.md
+!media/icon.svg
+!media/icon.png
+!dist/extension.js
+!dist/THIRD_PARTY_LICENSES.md
+!dist/webview/index.html
+!dist/webview/assets/**

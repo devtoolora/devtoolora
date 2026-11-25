@@ -1,0 +1,36 @@
+.loading {
+  padding: 48px 16px;
+  color: var(--color-muted);
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+.runtime {
+  margin: 16px;
+}
+
+.failure {
+  margin: 16px;
+  padding: 24px;
+  border: 1px solid var(--color-calibration);
+  border-radius: 6px;
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: var(--font-size-lg);
+  }
+
+  p:not(.eyebrow) {
+    margin: 0 0 16px;
+    color: var(--color-muted);
+  }
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-signal);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

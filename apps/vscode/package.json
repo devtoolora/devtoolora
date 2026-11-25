@@ -1,0 +1,170 @@
+{
+  "name": "devtoolora",
+  "displayName": "Dev Toolora: Local Developer Tools",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#0b172d",
+    "theme": "dark"
+  },
+  "description": "250+ developer tools that run 100% locally: JSON, YAML, JWT, Base64, hashes, UUIDs, PDFs, images and more. No network, no telemetry.",
+  "version": "0.9.0",
+  "publisher": "devtoolora",
+  "license": "MIT",
+  "pricing": "Free",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devtoolora/devtoolora.git"
+  },
+  "homepage": "https://github.com/devtoolora/devtoolora#readme",
+  "bugs": {
+    "url": "https://github.com/devtoolora/devtoolora/issues"
+  },
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "keywords": [
+    "devtools",
+    "developer tools",
+    "local",
+    "offline",
+    "privacy",
+    "json",
+    "yaml",
+    "xml",
+    "jwt",
+    "base64",
+    "uuid",
+    "hash",
+    "regex",
+    "converter",
+    "formatter",
+    "pdf"
+  ],
+  "main": "./dist/extension.js",
+  "scripts": {
+    "generate": "node ../../scripts/generate-vscode-tool-metadata.js",
+    "build:webview": "vite build --config vite.config.ts && vite build --config vite.config.ts --mode worker && vite build --config vite.config.ts --mode pdfjs",
+    "build:extension": "node scripts/build-extension.mjs",
+    "build": "npm run build:webview && npm run build:extension",
+    "typecheck": "tsc --noEmit && tsc -p src/webview/client/tsconfig.json",
+    "vscode:prepublish": "npm run build",
+    "package": "node scripts/package.js",
+    "verify": "node scripts/verify-package.js"
+  },
+  "dependencies": {
+    "@devtoolora/browser-catalog": "0.1.0",
+    "@devtoolora/core": "0.1.0",
+    "@devtoolora/functions": "0.1.0",
+    "@devtoolora/tool-ui": "0.1.0",
+    "@devtoolora/tools": "0.1.0",
+    "figlet": "^1.12.0",
+    "lucide-react": "^1.70.0",
+    "pdfjs-dist": "6.5.438",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/vscode": "^1.96.0",
+    "@vscode/vsce": "^4.1.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^31.0.0",
+    "sass": "^1.108.0",
+    "typescript": "^5.8.0",
+    "vite": "^8.3.6"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "devToolora",
+          "title": "Dev Toolora",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "devToolora": [
+        {
+          "id": "devToolora.toolbox",
+          "name": "Tools",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "devToolora.openToolbox",
+        "title": "Open Toolbox",
+        "category": "Dev Toolora"
+      },
+      {
+        "command": "devToolora.openActiveTool",
+        "title": "Open Active Tool in Editor",
+        "category": "Dev Toolora",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "devToolora.runTool",
+        "title": "Run Tool...",
+        "category": "Dev Toolora"
+      },
+      {
+        "command": "devToolora.transformSelection",
+        "title": "Transform Selection...",
+        "category": "Dev Toolora"
+      },
+      {
+        "command": "devToolora.suggestToolsForSelection",
+        "title": "Suggest Tools for Selection",
+        "category": "Dev Toolora"
+      },
+      {
+        "command": "devToolora.base64EncodeFile",
+        "title": "Base64 Encode File",
+        "category": "Dev Toolora"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "devToolora.suggestToolsForSelection",
+          "when": "editorHasSelection",
+          "group": "navigation@49"
+        },
+        {
+          "command": "devToolora.transformSelection",
+          "when": "editorHasSelection",
+          "group": "navigation@50"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "devToolora.base64EncodeFile",
+          "when": "resourceScheme == file && !explorerResourceIsFolder",
+          "group": "navigation@50"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "devToolora.openActiveTool",
+          "when": "view == devToolora.toolbox",
+          "group": "navigation@5"
+        },
+        {
+          "command": "devToolora.runTool",
+          "when": "view == devToolora.toolbox",
+          "group": "navigation@10"
+        }
+      ]
+    }
+  }
+}

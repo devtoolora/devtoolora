@@ -1,0 +1,98 @@
+@use '@styles/tokens.scss' as *;
+
+.desktopApp {
+  display: grid;
+  grid-template: 58px minmax(0, 1fr) / 236px minmax(0, 1fr);
+  height: 100vh;
+  min-height: 640px;
+  overflow: hidden;
+  background: var(--color-void);
+}
+
+:root[data-theme='light'] {
+  .desktopApp {
+    background: var(--color-void);
+  }
+}
+
+// Translucent tokens make every surface see-through. Menus and dialogs stay opaque, because their
+// text sits over changing content rather than over the calm color field.
+:root[data-surface='glass'][data-theme] {
+  --color-void: #0a1024;
+  --color-surface: rgb(255 255 255 / 6%);
+  --color-surface-strong: rgb(255 255 255 / 10%);
+  --color-line: rgb(255 255 255 / 20%);
+  --color-line-soft: rgb(255 255 255 / 11%);
+  --color-muted: #bccada;
+  --color-menu: #18214a;
+  --glass-panel: rgb(255 255 255 / 4%);
+  --glass-rim: rgb(255 255 255 / 20%);
+  --glass-shadow: rgb(2 6 24 / 40%);
+
+  .desktopApp {
+    background:
+      radial-gradient(38vmax 30vmax at 12% 18%, #2c4bb49c, transparent 72%),
+      radial-gradient(44vmax 34vmax at 78% 12%, #6a2fb094, transparent 70%),
+      radial-gradient(50vmax 36vmax at 58% 92%, #0f7f8f94, transparent 72%),
+      linear-gradient(115deg, transparent 38%, rgb(120 160 255 / 14%) 46%, transparent 54%), #0a1024;
+  }
+}
+
+:root[data-surface='glass'][data-theme='light'] {
+  --color-void: #e9eefa;
+  --color-surface: rgb(255 255 255 / 42%);
+  --color-surface-strong: rgb(255 255 255 / 58%);
+  --color-line: rgb(24 44 92 / 26%);
+  --color-line-soft: rgb(24 44 92 / 13%);
+  --color-muted: #3b475a;
+  --color-menu: #ffffff;
+  --glass-panel: rgb(255 255 255 / 30%);
+  --glass-rim: rgb(255 255 255 / 85%);
+  --glass-shadow: rgb(40 60 120 / 14%);
+
+  .desktopApp {
+    background:
+      radial-gradient(38vmax 30vmax at 12% 18%, #a9c0ff, transparent 72%),
+      radial-gradient(44vmax 34vmax at 78% 12%, #e3c1ff, transparent 70%),
+      radial-gradient(50vmax 36vmax at 58% 92%, #a5ece8, transparent 72%),
+      linear-gradient(115deg, transparent 38%, rgb(255 255 255 / 50%) 46%, transparent 54%), #e9eefa;
+  }
+}
+
+// The macOS window itself is glass. One even tint covers the whole window, so no area is bare
+// desktop, and panels add a little more so text stays readable over any wallpaper.
+:root[data-surface='glass'][data-window='see-through'] {
+  --glass-panel: rgb(8 14 32 / 16%);
+
+  background: transparent;
+
+  body {
+    background: transparent;
+  }
+
+  .desktopApp {
+    background: rgb(8 14 32 / 24%);
+  }
+}
+
+:root[data-surface='glass'][data-window='see-through'][data-theme='light'] {
+  --glass-panel: rgb(255 255 255 / 22%);
+
+  .desktopApp {
+    background: rgb(255 255 255 / 30%);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root[data-surface='glass'][data-theme] {
+    --color-surface: var(--color-menu);
+    --color-surface-strong: var(--color-menu);
+    --glass-panel: var(--color-menu);
+  }
+}
+
+@media (max-width: 780px) {
+  .desktopApp {
+    grid-template-columns: 1fr;
+  }
+}

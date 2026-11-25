@@ -1,0 +1,110 @@
+@mixin mobile {
+  @media (max-width: 640px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 961px) {
+    @content;
+  }
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 2px;
+  }
+}
+
+// Every select: own chevron, plus an in-page picker where the browser allows it. Elsewhere the
+// open menu stays native, so macOS can draw it as translucent glass over the page.
+@mixin select-control {
+  padding-right: 30px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 12 12' fill='none' stroke='%238496a6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 4.5 3 3 3-3'/%3E%3C/svg%3E");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  cursor: pointer;
+
+  @supports (appearance: base-select) {
+    align-items: center;
+    appearance: base-select;
+
+    &::picker-icon {
+      display: none;
+    }
+
+    &::picker(select) {
+      padding: 4px;
+      border: 1px solid var(--color-line);
+      border-radius: 6px;
+      appearance: base-select;
+      background: var(--color-menu, var(--color-surface-strong));
+      box-shadow: 0 8px 24px var(--color-shadow);
+      color: var(--color-text);
+      // Open below unless it does not fit, instead of towards the larger side of the viewport.
+      position-try-order: normal;
+    }
+
+    option {
+      padding: 6px 10px;
+      border-radius: 3px;
+      white-space: nowrap;
+
+      &::checkmark {
+        display: none;
+      }
+
+      &:hover,
+      &:focus-visible {
+        background: var(--color-signal-soft);
+        color: var(--color-text);
+      }
+
+      &:checked {
+        color: var(--color-signal);
+      }
+    }
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@mixin surface-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-soft);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--color-shadow);
+  transition:
+    border-color 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,43 @@
+@use '@styles/tokens.scss' as *;
+
+.toolsPage {
+  padding-block: 34px 70px;
+}
+
+.catalogLayout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.toolGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 12px;
+}
+
+.catalogEmpty {
+  grid-column: 1 / -1;
+  padding: 50px;
+  border: 1px dashed var(--color-line);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .catalogLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .toolGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .toolsPage {
+    padding-top: 24px;
+  }
+}

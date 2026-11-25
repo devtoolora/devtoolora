@@ -1,0 +1,100 @@
+.themeSwitch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  user-select: none;
+  border-radius: 999px;
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus-visible {
+    outline: none;
+
+    .themeSwitchTrack {
+      outline: 2px solid var(--color-signal);
+      outline-offset: 2px;
+    }
+  }
+
+  &:hover .themeSwitchTrack {
+    border-color: var(--color-signal);
+  }
+}
+
+.themeSwitchTrack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 48px;
+  height: 26px;
+  padding: 2px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: var(--color-surface);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 25%);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+  pointer-events: none;
+}
+
+.themeSwitchThumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-signal);
+  color: #0b172d;
+  box-shadow:
+    0 1px 4px rgb(0 0 0 / 30%),
+    0 0 8px rgb(54 183 255 / 55%);
+  transform: translateX(22px);
+  transition:
+    transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+  pointer-events: none;
+
+  &:global(.is-light) {
+    transform: translateX(0);
+    background: #36b7ff;
+    color: #0b172d;
+  }
+
+  &:global(.is-dark) {
+    transform: translateX(22px);
+    background: var(--color-signal);
+    color: #0b172d;
+  }
+}
+
+:root[data-theme='light'] {
+  .themeSwitchTrack {
+    border-color: #cbd5e1;
+    background: #e2e8f0;
+  }
+
+  .themeSwitchThumb {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow:
+      0 1px 4px rgb(0 0 0 / 15%),
+      0 0 8px rgb(2 132 199 / 40%);
+
+    &:global(.is-light),
+    &:global(.is-dark) {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow:
+        0 1px 4px rgb(0 0 0 / 15%),
+        0 0 8px rgb(2 132 199 / 40%);
+    }
+  }
+}

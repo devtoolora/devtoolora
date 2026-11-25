@@ -1,0 +1,65 @@
+@use '@styles/tokens.scss' as *;
+
+.heroPoster {
+  /* star centre inside HeroTriangle's 440x420 viewBox is (360, 240) */
+  --star-x: calc(95% - var(--hero-triangle-width) * 80 / 440);
+  --star-y: calc(56px + var(--hero-triangle-width) * 240 / 440);
+  --glow-core: rgb(140 245 255 / 90%);
+  --glow-edge: rgb(70 190 255 / 55%);
+  --glow-haze: rgb(40 105 225 / 78%);
+  --haze-at: calc(var(--star-x) - 14%) calc(var(--star-y) + 120px);
+  --haze-size: 70% 80%;
+
+  position: absolute;
+  z-index: -4;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 420px 170px at var(--star-x) var(--star-y),
+      var(--glow-core),
+      var(--glow-edge) 18%,
+      color-mix(in srgb, var(--glow-edge) 40%, transparent) 50%,
+      color-mix(in srgb, var(--glow-edge) 10%, transparent) 78%,
+      transparent
+    ),
+    radial-gradient(
+      ellipse var(--haze-size) at var(--haze-at),
+      var(--glow-haze),
+      color-mix(in srgb, var(--glow-haze) 55%, transparent) 45%,
+      color-mix(in srgb, var(--glow-haze) 15%, transparent) 75%,
+      transparent
+    );
+  pointer-events: none;
+}
+
+:root[data-theme='light'] .heroPoster {
+  --glow-core: rgb(25 95 205 / 60%);
+  --glow-edge: rgb(40 115 215 / 40%);
+  --glow-haze: rgb(60 125 215 / 40%);
+}
+
+/* the triangle is hidden here, so the field falls back to its default star */
+@media (max-width: 760px) {
+  .heroPoster {
+    --star-x: 90%;
+    --star-y: 28%;
+    --haze-at: calc(var(--star-x) - 30%) calc(var(--star-y) + 40px);
+    --haze-size: 130% 60%;
+  }
+}
+
+.devToolora {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1200ms ease;
+}
+
+.devToolora[data-ready='true'] {
+  opacity: 1;
+}

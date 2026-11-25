@@ -1,0 +1,151 @@
+import { ToolDefinition } from '@devtoolora/core';
+import { createCssTool } from '../shared';
+
+const gridDefaults: Record<string, string> = {
+  alignContent: 'stretch',
+  alignItems: 'stretch',
+  autoFlow: 'row',
+  columnGap: '16',
+  columns: '3',
+  justifyContent: 'stretch',
+  justifyItems: 'stretch',
+  minTrack: '120',
+  rowGap: '16',
+  rows: '2',
+};
+
+export const cssGridGeneratorTool: ToolDefinition = createCssTool({
+  id: 'css-grid-generator',
+  keywords: ['grid layout', 'grid-template-columns', 'gap', 'tracks', 'layout'],
+  name: 'CSS Grid Generator',
+  kind: 'grid',
+  fields: [
+    { id: 'columns', label: 'Columns', type: 'number', defaultValue: '3' },
+    { id: 'rows', label: 'Rows', type: 'number', defaultValue: '2' },
+    { id: 'columnGap', label: 'Column gap', type: 'number', defaultValue: '16' },
+    { id: 'rowGap', label: 'Row gap', type: 'number', defaultValue: '16' },
+    { id: 'minTrack', label: 'Minimum track', type: 'number', defaultValue: '120' },
+    {
+      id: 'autoFlow',
+      label: 'Auto flow',
+      type: 'select',
+      defaultValue: 'row',
+      options: [
+        { label: 'Row', value: 'row' },
+        { label: 'Column', value: 'column' },
+        { label: 'Row dense', value: 'row dense' },
+        { label: 'Column dense', value: 'column dense' },
+      ],
+    },
+    {
+      id: 'justifyItems',
+      label: 'Item alignment',
+      type: 'select',
+      defaultValue: 'stretch',
+      options: [
+        { label: 'Start', value: 'start' },
+        { label: 'Center', value: 'center' },
+        { label: 'End', value: 'end' },
+        { label: 'Stretch', value: 'stretch' },
+      ],
+    },
+    {
+      id: 'alignItems',
+      label: 'Item vertical alignment',
+      type: 'select',
+      defaultValue: 'stretch',
+      options: [
+        { label: 'Start', value: 'start' },
+        { label: 'Center', value: 'center' },
+        { label: 'End', value: 'end' },
+        { label: 'Stretch', value: 'stretch' },
+      ],
+    },
+    {
+      id: 'justifyContent',
+      label: 'Content distribution',
+      type: 'select',
+      defaultValue: 'stretch',
+      options: [
+        { label: 'Start', value: 'start' },
+        { label: 'Center', value: 'center' },
+        { label: 'End', value: 'end' },
+        { label: 'Space between', value: 'space-between' },
+        { label: 'Space around', value: 'space-around' },
+        { label: 'Stretch', value: 'stretch' },
+      ],
+    },
+    {
+      id: 'alignContent',
+      label: 'Content vertical distribution',
+      type: 'select',
+      defaultValue: 'stretch',
+      options: [
+        { label: 'Start', value: 'start' },
+        { label: 'Center', value: 'center' },
+        { label: 'End', value: 'end' },
+        { label: 'Space between', value: 'space-between' },
+        { label: 'Space around', value: 'space-around' },
+        { label: 'Stretch', value: 'stretch' },
+      ],
+    },
+  ],
+  samples: [
+    {
+      label: 'Card grid (3 cols, 16px gap)',
+      fields: {
+        columns: '3',
+        rows: '2',
+        columnGap: '16',
+        rowGap: '16',
+        minTrack: '180',
+        autoFlow: 'row',
+        justifyItems: 'stretch',
+        alignItems: 'stretch',
+        justifyContent: 'stretch',
+        alignContent: 'stretch',
+      },
+    },
+    {
+      label: 'Two-column layout (24px gap)',
+      fields: {
+        columns: '2',
+        rows: '1',
+        columnGap: '24',
+        rowGap: '24',
+        minTrack: '240',
+        autoFlow: 'row',
+        justifyItems: 'stretch',
+        alignItems: 'stretch',
+        justifyContent: 'stretch',
+        alignContent: 'stretch',
+      },
+    },
+    {
+      fields: {
+        ...gridDefaults,
+        columnGap: '8',
+        columns: '2',
+        minTrack: '80',
+        rowGap: '24',
+        rows: '2',
+      },
+      label: 'Compact grid',
+    },
+    {
+      fields: { ...gridDefaults, autoFlow: 'column', columns: '2', rows: '3' },
+      label: 'Column-first placement',
+    },
+    {
+      fields: { ...gridDefaults, alignItems: 'center', justifyItems: 'center' },
+      label: 'Centered items',
+    },
+    { fields: { ...gridDefaults, columns: '6', minTrack: '600' }, label: 'Minimum width overflow' },
+  ],
+  description: 'Build a live CSS grid layout with independent gaps, explicit tracks and alignment.',
+  relatedToolIds: [
+    'css-flexbox-generator',
+    'css-box-shadow-generator',
+    'css-border-radius-generator',
+  ],
+});

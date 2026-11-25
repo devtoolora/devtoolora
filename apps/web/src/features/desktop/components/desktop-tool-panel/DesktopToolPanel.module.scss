@@ -1,0 +1,134 @@
+@use '@styles/tokens.scss' as *;
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+
+  &:has(> .conversionHelp) .toolStage {
+    min-height: calc(100vh - 58px - 66px);
+  }
+
+  > .conversionHelp,
+  > .desktopToolFaq {
+    flex-shrink: 0;
+    margin: 0 16px 14px;
+  }
+}
+
+.toolStage {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 58px);
+  flex-shrink: 0;
+}
+
+.toolHeader {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 16px;
+  padding: 22px 24px 17px;
+  border-bottom: 1px solid var(--color-line-soft);
+
+  h1 {
+    margin: 0;
+    font: 600 23px var(--font-mono);
+  }
+
+  p:not(.eyebrow) {
+    margin: 4px 0 0;
+    color: var(--color-muted);
+    font: var(--font-size-xs) var(--font-mono);
+  }
+
+  > div:nth-child(2) > div {
+    display: flex;
+    gap: 18px;
+    margin-top: 10px;
+    color: var(--color-muted);
+    font: var(--font-size-2xs) var(--font-mono);
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+}
+
+.toolBadges {
+  display: flex;
+  gap: 7px;
+  padding: 8px 24px 0;
+
+  span {
+    padding: 3px 6px;
+    border: 1px solid var(--color-line);
+    border-radius: 3px;
+    color: var(--color-signal);
+    font: var(--font-size-2xs) var(--font-mono);
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 780px) {
+  .workspace {
+    grid-column: 1;
+  }
+
+  .toolHeader {
+    padding-inline: 15px;
+  }
+}
+
+.continueWith {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  margin: 0 16px 16px;
+
+  > span {
+    margin-right: 4px;
+    color: var(--color-muted);
+    font: var(--font-size-xs) var(--font-mono);
+    text-transform: uppercase;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-signal);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.eyebrow.isCalibration {
+  color: var(--color-calibration);
+}
+
+.conversionHelp,
+.desktopToolFaq {
+  padding: 18px;
+  border: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.conversionHelp summary,
+.desktopToolFaq > summary {
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.desktopToolFaq[open] > summary {
+  margin-bottom: 8px;
+}

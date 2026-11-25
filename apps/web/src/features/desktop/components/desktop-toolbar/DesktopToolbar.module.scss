@@ -1,0 +1,86 @@
+@use '@styles/tokens.scss' as *;
+@use '../../glassPanel' as *;
+
+.toolbar {
+  z-index: 20;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 236px minmax(300px, 620px) auto;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface);
+  padding-right: 14px;
+}
+
+.toolbarActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-inline: 16px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+
+  strong {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+  }
+
+  small {
+    color: var(--color-muted);
+    font-size: var(--font-size-2xs);
+    letter-spacing: 0.1em;
+  }
+}
+
+.settingsButton {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  justify-self: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: all 0.12s ease;
+
+  &:hover {
+    border-color: var(--color-line);
+    color: var(--color-signal);
+    background: var(--color-signal-soft);
+  }
+}
+
+:root[data-theme='light'] {
+  .toolbar {
+    background: var(--color-surface);
+  }
+}
+
+.toolbar {
+  @include glass-panel;
+}
+
+@media (max-width: 780px) {
+  .toolbar {
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    padding-inline: 8px;
+  }
+
+  .brand {
+    padding: 0;
+
+    strong,
+    small {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+export { evaluateExpression } from './expression';
+export { baseConversionDigitLimit, convertBase, type BaseConversionResult } from './baseConversion';
+export { calculatePercentage, type PercentageOptions, type PercentageResult } from './percentage';
+export { calculateFinance } from './finance';
+export { formatDouble } from './shared';
+export { inspectFloat, type FloatFormat, type FloatInspection } from './ieee754';
+export { convertRomanLines, fromRoman, toRoman, type RomanLinesResult } from './roman';
+export { describeNumbers, type NumberDescription } from './statistics';
+export { gcdLcm, testPrimality, type GcdLcmResult, type PrimalityTest } from './numberTheory';
+export { factorize, type Factorization } from './factorization';
+export { randomBelow, randomDecimals, randomIntegers, rollDice, type DiceResult } from './random';

@@ -1,0 +1,135 @@
+import { ToolDefinition } from '@devtoolora/core';
+import { createCssTool } from '../shared';
+
+const flexDefaults: Record<string, string> = {
+  align: 'center',
+  alignContent: 'stretch',
+  basis: '120',
+  direction: 'row',
+  gap: '16',
+  grow: '0',
+  justify: 'center',
+  order: '0',
+  shrink: '1',
+  wrap: 'nowrap',
+};
+
+export const cssFlexboxGeneratorTool: ToolDefinition = createCssTool({
+  id: 'css-flexbox-generator',
+  keywords: ['flex', 'flexbox', 'justify-content', 'align-items', 'layout', 'flex-wrap'],
+  name: 'CSS Flexbox Generator',
+  kind: 'flexbox',
+  fields: [
+    {
+      id: 'direction',
+      label: 'Direction',
+      type: 'select',
+      defaultValue: 'row',
+      options: [
+        { label: 'Row', value: 'row' },
+        { label: 'Column', value: 'column' },
+      ],
+    },
+    {
+      id: 'wrap',
+      label: 'Wrapping',
+      type: 'select',
+      defaultValue: 'nowrap',
+      options: [
+        { label: 'No wrap', value: 'nowrap' },
+        { label: 'Wrap', value: 'wrap' },
+        { label: 'Wrap reverse', value: 'wrap-reverse' },
+      ],
+    },
+    {
+      id: 'justify',
+      label: 'Distribution',
+      type: 'select',
+      defaultValue: 'center',
+      options: [
+        { label: 'Start', value: 'flex-start' },
+        { label: 'Center', value: 'center' },
+        { label: 'End', value: 'flex-end' },
+        { label: 'Space between', value: 'space-between' },
+        { label: 'Space around', value: 'space-around' },
+      ],
+    },
+    {
+      id: 'align',
+      label: 'Item alignment',
+      type: 'select',
+      defaultValue: 'center',
+      options: [
+        { label: 'Start', value: 'flex-start' },
+        { label: 'Center', value: 'center' },
+        { label: 'End', value: 'flex-end' },
+        { label: 'Stretch', value: 'stretch' },
+      ],
+    },
+    {
+      id: 'alignContent',
+      label: 'Multi-line distribution',
+      type: 'select',
+      defaultValue: 'stretch',
+      options: [
+        { label: 'Start', value: 'flex-start' },
+        { label: 'Center', value: 'center' },
+        { label: 'End', value: 'flex-end' },
+        { label: 'Space between', value: 'space-between' },
+        { label: 'Space around', value: 'space-around' },
+        { label: 'Stretch', value: 'stretch' },
+      ],
+    },
+    { id: 'gap', label: 'Gap', type: 'number', defaultValue: '16' },
+    { id: 'grow', label: 'Featured item grow', type: 'number', defaultValue: '0' },
+    { id: 'shrink', label: 'Featured item shrink', type: 'number', defaultValue: '1' },
+    { id: 'basis', label: 'Featured item basis', type: 'number', defaultValue: '120' },
+    { id: 'order', label: 'Featured item order', type: 'number', defaultValue: '0' },
+  ],
+  samples: [
+    {
+      label: 'Centered row (gap 16px)',
+      fields: {
+        direction: 'row',
+        wrap: 'nowrap',
+        justify: 'center',
+        align: 'center',
+        alignContent: 'stretch',
+        gap: '16',
+        grow: '0',
+        shrink: '1',
+        basis: '120',
+        order: '0',
+      },
+    },
+    {
+      label: 'Space-between header (gap 12px)',
+      fields: {
+        direction: 'row',
+        wrap: 'nowrap',
+        justify: 'space-between',
+        align: 'center',
+        alignContent: 'stretch',
+        gap: '12',
+        grow: '0',
+        shrink: '1',
+        basis: '120',
+        order: '0',
+      },
+    },
+    { fields: { ...flexDefaults, wrap: 'wrap' }, label: 'Wrapped toolbar' },
+    { fields: { ...flexDefaults, direction: 'row-reverse' }, label: 'Reversed row' },
+    { fields: { ...flexDefaults, grow: '1' }, label: 'Growing featured item' },
+    { fields: { ...flexDefaults, order: '-1' }, label: 'Featured item first' },
+    {
+      fields: { ...flexDefaults, direction: 'column', justify: 'flex-start' },
+      label: 'Column stack',
+    },
+    {
+      fields: { ...flexDefaults, grow: '0.5', shrink: '0.5', wrap: 'wrap' },
+      label: 'Fractional flex factors',
+    },
+  ],
+  description: 'Explore flex direction, wrapping and alignment on a live layout with copyable CSS.',
+  relatedToolIds: ['css-grid-generator', 'css-box-shadow-generator', 'css-border-radius-generator'],
+});

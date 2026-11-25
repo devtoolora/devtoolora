@@ -1,0 +1,27 @@
+node_modules/
+out/
+packages/*/dist/
+apps/*/dist/
+*.tsbuildinfo
+*.vsix
+.DS_Store
+.vscode-test/
+apps/desktop/src-tauri/target/
+apps/web/build/
+apps/web/.react-router/
+test-results/
+playwright-report/
+.tmp-shots/
+.superpowers/
+artifacts/
+scratch/
+.turbo/
+.playwright-mcp/
+*.generated.*
+coverage/
+
+# compiled SCSS byproducts (Vite compiles *.scss itself)
+*.module.css
+*.module.css.map
+**/styles/tokens.css
+**/styles/tokens.css.map

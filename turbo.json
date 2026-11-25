@@ -1,0 +1,59 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "generate": {
+      "dependsOn": ["^generate"],
+      "outputs": ["src/**/*.generated.*"]
+    },
+    "devtoolora#generate": {
+      "dependsOn": ["^generate"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/generate-vscode-tool-metadata.js",
+        "$TURBO_ROOT$/scripts/lib/requireTs.cjs"
+      ],
+      "outputs": ["src/**/*.generated.*"]
+    },
+    "@devtoolora/web#generate": {
+      "dependsOn": ["^generate"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/generate-web-tool-metadata.js",
+        "$TURBO_ROOT$/scripts/lib/requireTs.cjs"
+      ],
+      "outputs": ["src/**/*.generated.*"]
+    },
+    "@devtoolora/browser-catalog#generate": {
+      "dependsOn": ["^generate"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/generate-browser-catalog-domains.js",
+        "$TURBO_ROOT$/scripts/lib/requireTs.cjs"
+      ],
+      "outputs": ["src/**/*.generated.*"]
+    },
+    "@devtoolora/tools#generate": {
+      "dependsOn": ["^generate"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/generate-tool-content-loaders.mjs"],
+      "outputs": ["src/**/*.generated.*"]
+    },
+    "build": {
+      "dependsOn": ["^generate", "generate"],
+      "outputs": ["dist/**", "build/**", "out/**"]
+    },
+    "@devtoolora/web#build": {
+      "dependsOn": ["^generate", "generate"],
+      "env": ["SITE_URL"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/vite/**"],
+      "outputs": ["build/**", "$TURBO_ROOT$/out/web/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^generate", "generate"],
+      "outputs": []
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@use '@styles/tokens.scss' as *;
+
+.toolLink {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 8px 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-muted);
+  font: var(--font-size-xs) var(--font-mono);
+  text-align: left;
+
+  > span:first-child {
+    color: var(--color-signal);
+  }
+
+  > span:nth-child(2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &:hover,
+  &[data-active='true'] {
+    border-color: var(--color-line);
+    background: var(--color-signal-soft);
+    color: var(--color-text);
+  }
+
+  &[data-active='true'] {
+    border-color: var(--color-signal);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.chip {
+  width: auto;
+  border-color: var(--color-line-soft);
+}
