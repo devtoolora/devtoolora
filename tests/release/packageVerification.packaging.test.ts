@@ -202,6 +202,83 @@ describe('package verification', () => {
     }
   });
 
+  it('keeps a Tauri desktop app shell around the shared web app', () => {
+    const desktopRoot = join(process.cwd(), 'apps', 'desktop');
+    const desktopPackage = JSON.parse(readFileSync(join(desktopRoot, 'package.json'), 'utf8')) as {
+      devDependencies?: Record<string, string>;
+    };
+    const tauriConfig = JSON.parse(
+      readFileSync(join(desktopRoot, 'src-tauri', 'tauri.conf.json'), 'utf8'),
+    ) as {
+      app?: {
+        security?: { csp?: string | null };
+        windows?: Array<{ minHeight?: number; minWidth?: number; url?: string }>;
+      };
+      build?: { beforeBuildCommand?: string; devUrl?: string; frontendDist?: string };
+      bundle?: { icon?: string[] };
+      identifier?: string;
+      productName?: string;
+    };
+    const capability = readFileSync(
+      join(desktopRoot, 'src-tauri', 'capabilities', 'default.json'),
+      'utf8',
+    );
+    const cargoManifest = readFileSync(join(desktopRoot, 'src-tauri', 'Cargo.toml'), 'utf8');
+
+    assert.ok(desktopPackage.devDependencies?.['@tauri-apps/cli']?.startsWith('^2.'));
+    assert.match(cargoManifest, /tauri = \{ version = "2"/);
+    assert.match(cargoManifest, /^name = "devtoolora-desktop"$/m);
+    assert.match(cargoManifest, /^license = "MIT"$/m);
+    for (const plugin of ['dialog', 'fs', 'clipboard-manager', 'window-state'])
+      assert.match(cargoManifest, new RegExp(`tauri-plugin-${plugin}`));
+
+    for (const permission of [
+      'dialog:allow-open',
+      'dialog:allow-save',
+      'fs:allow-read-file',
+      'fs:allow-stat',
+      'fs:allow-write-file',
+      'clipboard-manager:allow-write-text',
+      'window-state:default',
+    ]) {
+      assert.match(capability, new RegExp(permission));
+    }
+
+    assert.equal(tauriConfig.productName, 'Dev Toolora');
+    assert.equal(tauriConfig.identifier, 'dev.devtoolora.app');
+    assert.ok(tauriConfig.bundle?.icon?.includes('icons/icon.icns'));
+    assert.ok(tauriConfig.bundle?.icon?.includes('icons/icon.ico'));
+    assert.equal(tauriConfig.app?.windows?.[0]?.url, 'desktop/index.html');
+    assert.equal(tauriConfig.app?.windows?.[0]?.minWidth, 900);
+    assert.equal(tauriConfig.app?.windows?.[0]?.minHeight, 640);
+    assert.match(tauriConfig.app?.security?.csp ?? '', /default-src 'self'/);
+    assert.equal(tauriConfig.build?.beforeBuildCommand, 'npm run build:web --prefix ../..');
+    assert.equal(tauriConfig.build?.devUrl, 'http://localhost:5173');
+    assert.equal(tauriConfig.build?.frontendDist, '../../../out/web');
+  });
+
+  it('lets the desktop CSP compile wasm and fetch runtime files without loosening scripts', () => {
+    const tauriConfig = JSON.parse(
+      readFileSync(join(process.cwd(), 'apps', 'desktop', 'src-tauri', 'tauri.conf.json'), 'utf8'),
+    ) as { app?: { security?: { csp?: string } } };
+    // Whole tokens: 'wasm-unsafe-eval' contains unsafe-eval as a substring.
+    const directives = new Map(
+      (tauriConfig.app?.security?.csp ?? '')
+        .split(';')
+        .map((directive) => directive.trim().split(/\s+/))
+        .filter(([name]) => name)
+        .map(([name = '', ...tokens]) => [name, tokens]),
+    );
+    const scriptSrc = directives.get('script-src') ?? [];
+
+    assert.deepEqual(scriptSrc, ["'self'", "'wasm-unsafe-eval'"]);
+
+    for (const token of ['blob:', "'unsafe-eval'", 'data:'])
+      assert.ok(!scriptSrc.includes(token), `script-src must not allow ${token}`);
+
+    assert.ok(directives.get('connect-src')?.includes("'self'"), "connect-src needs 'self'");
+  });
+
   it('builds CI artifacts and only drafts a release for a version tag', () => {
     const workflowRoot = join(process.cwd(), '.github', 'workflows');
     const workflow = readFileSync(join(workflowRoot, 'ci.yml'), 'utf8');
@@ -214,15 +291,18 @@ describe('package verification', () => {
       'npm run test:coverage',
       'playwright test --config playwright.browser.config.ts',
       'npm run package:verify',
+      'npm run desktop:build',
     ]) {
       assert.match(workflow, new RegExp(command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     }
 
-    for (const artifact of ['web-pwa', 'name: vsix']) {
+    for (const artifact of ['web-pwa', 'name: vsix', 'desktop-${{ matrix.name }}']) {
       assert.match(workflow, new RegExp(artifact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     }
 
-    assert.match(workflow, /runs-on: ubuntu-22\.04/);
+    for (const target of ['macos-latest', 'windows-latest', 'ubuntu-22.04']) {
+      assert.match(workflow, new RegExp(target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    }
 
     assert.match(workflow, /permissions:\s+contents: read/);
     // A tag may create a draft for review; publishing and signing stay manual.

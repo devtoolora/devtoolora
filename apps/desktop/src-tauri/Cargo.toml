@@ -1,0 +1,21 @@
+[package]
+name = "devtoolora-desktop"
+version = "0.9.0"
+description = "Dev Toolora desktop app: local developer tools that never leave your computer."
+authors = ["Dev Toolora contributors"]
+license = "MIT"
+repository = "https://github.com/devtoolora/devtoolora"
+edition = "2021"
+
+[lib]
+name = "dev_toolora_desktop_lib"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["macos-private-api"] }
+tauri-plugin-clipboard-manager = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-window-state = "2"

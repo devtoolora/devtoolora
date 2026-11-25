@@ -3,6 +3,16 @@
 All notable changes to Dev Toolora are listed here. The project follows
 [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Desktop app
+
+The first release of the desktop app, built on the same tools as the web app.
+
+- macOS, Windows and Linux app with native file dialogs, favorites and recent tools.
+- Six color themes in light and dark, including Liquid Glass, which makes the macOS window
+  see-through, and a custom background color.
+
 ## 0.9.0 - Unreleased
 
 The first public release, as a public beta on the web and as an extension for VS Code, Cursor,

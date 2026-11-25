@@ -37,7 +37,7 @@ outside the web app.
 
 The `/desktop` route intentionally lives in this app so the public detail pages
 and Tauri workspace share one schema runner and worker. Only that lazy route
-imports Tauri JavaScript APIs; the native container lives on the `feature/native-app` branch.
+imports Tauri JavaScript APIs; `apps/desktop` owns the native container.
 
 ## Static deployment and SEO
 

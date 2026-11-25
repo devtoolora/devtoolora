@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Dev Toolora",
+  "version": "0.9.0",
+  "identifier": "dev.devtoolora.app",
+  "build": {
+    "beforeDevCommand": "npm run dev:web --prefix ../..",
+    "beforeBuildCommand": "npm run build:web --prefix ../..",
+    "devUrl": "http://localhost:5173",
+    "frontendDist": "../../../out/web"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Dev Toolora",
+        "url": "desktop/index.html",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 900,
+        "minHeight": 640,
+        "dragDropEnabled": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost; font-src 'self' data:; img-src 'self' asset: http://asset.localhost data: blob:; object-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:"
+    },
+    "macOSPrivateApi": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "publisher": "Dev Toolora contributors",
+    "copyright": "Copyright (c) 2026 Dev Toolora contributors",
+    "category": "DeveloperTool",
+    "shortDescription": "Local developer tools that never leave your computer.",
+    "longDescription": "More than 250 developer tools that run on your computer: format and validate JSON, YAML and XML, encode and decode Base64, URLs and JWTs, inspect certificates and keys, generate UUIDs, hashes and passwords, convert timestamps and units, edit PDFs and images, and more. Nothing you paste or open is sent anywhere.",
+    "licenseFile": "../../../LICENSE",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

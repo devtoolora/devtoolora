@@ -5,11 +5,13 @@ so we can agree on the approach first.
 
 ## Setup
 
-You need Node.js 24 (see `.nvmrc`).
+You need Node.js 24 (see `.nvmrc`). The desktop app also needs Rust and the
+[Tauri prerequisites](https://tauri.app/start/prerequisites/).
 
 ```bash
 npm install
 npm run dev:web         # web app on http://localhost:5173
+npm run desktop:dev     # desktop app with hot reload
 ```
 
 To try the VS Code extension, run `npm run package` and install `devtoolora.vsix` with
@@ -22,8 +24,7 @@ To try the VS Code extension, run `npm run package` and install `devtoolora.vsix
   and documentation (`content.ts`). A few tools also keep larger samples in `sample.ts`. Groups
   are folders such as `crypto`, `devUtilities` and `formatters`.
 - `packages/tool-ui`: the shared React tool runner and design system.
-- `apps/web`, `apps/vscode`: the web app and the VS Code extension, with their tests. The desktop
-  app lives on the `feature/native-app` branch until it ships.
+- `apps/web`, `apps/vscode`, `apps/desktop`: the three products and their tests.
 
 The README describes the architecture in more detail.
 
