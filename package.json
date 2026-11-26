@@ -71,7 +71,7 @@
     "prettier": "^3.9.10",
     "simple-git-hooks": "^2.14.0",
     "turbo": "^2.11.10",
-    "typescript": "^5.8.0",
+    "typescript": "^7.0.2",
     "typescript-eslint": "^8.72.1",
     "vitest": "^5.1.0"
   }
