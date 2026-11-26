@@ -1,8 +1,17 @@
-import { parseXml, XmlDeclaration, XmlDocumentType, XmlElement } from '@rgrove/parse-xml';
+import { parseXml, XmlDeclaration, XmlDocumentType, XmlElement, XmlError } from '@rgrove/parse-xml';
 import type { XmlDocument, XmlNode } from '@rgrove/parse-xml';
 import { FunctionError } from '../errors';
 
 export const xmlMaxLength: number = 5_000_000;
+
+const maxDepth = 100;
+
+function limitError(maxNodes: number): FunctionError {
+  return new FunctionError(
+    'XML_LIMIT',
+    `XML supports up to ${maxDepth} nested element levels and ${maxNodes.toLocaleString('en-US')} nodes.`,
+  );
+}
 
 export function parseXmlDocument(
   source: string,
@@ -18,20 +27,26 @@ export function parseXmlDocument(
       `XML input is limited to ${maxLength.toLocaleString('en-US')} characters.`,
     );
 
+  const maxNodes = options.maxNodes ?? 100_000;
+
   try {
     const document = parseXml(source, {
       includeOffsets: true,
+      // The parser stops at the same element depth the tree check enforces.
+      maxElementDepth: maxDepth,
       preserveCdata: true,
       preserveComments: true,
       preserveDocumentType: true,
       preserveXmlDeclaration: true,
     });
 
-    assertSupportedXml(document, options.maxNodes ?? 100_000);
+    assertSupportedXml(document, maxNodes);
 
     return document;
   } catch (error) {
     if (error instanceof FunctionError) throw error;
+    if (error instanceof XmlError && error.message.startsWith('Maximum element depth'))
+      throw limitError(maxNodes);
     if (error instanceof RangeError)
       throw new FunctionError(
         'INVALID_XML',
@@ -57,12 +72,7 @@ function assertSupportedXml(document: XmlDocument, maxNodes: number): void {
 
     count += 1;
 
-    if (current.depth > 100 || count > maxNodes) {
-      throw new FunctionError(
-        'XML_LIMIT',
-        `XML supports up to 100 nested element levels and ${maxNodes.toLocaleString('en-US')} nodes.`,
-      );
-    }
+    if (current.depth > maxDepth || count > maxNodes) throw limitError(maxNodes);
 
     assertSupportedNode(current.node);
 
