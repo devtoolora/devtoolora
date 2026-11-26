@@ -14,18 +14,14 @@
   border-bottom: 1px solid var(--color-line);
 }
 
-.flowBracket {
-  flex: 0 0 28px;
-  width: 28px;
-  height: 28px;
-  fill: var(--color-text);
-}
-
-.flowBracketAccent {
+.brandMark {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
   fill: var(--color-signal);
 }
 
-.flowBracketCalibration {
+.brandMarkSpark {
   fill: var(--color-calibration);
 }
 
