@@ -5,10 +5,8 @@ updates:
     schedule:
       interval: weekly
     ignore:
-      # Node types follow the Node 24 runtime; TypeScript 7 waits for typescript-eslint support.
+      # Node types follow the Node 24 runtime.
       - dependency-name: '@types/node'
-        update-types: ['version-update:semver-major']
-      - dependency-name: typescript
         update-types: ['version-update:semver-major']
       # The VS Code types must stay within the engines.vscode range of the extension.
       - dependency-name: '@types/vscode'
