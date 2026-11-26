@@ -112,13 +112,12 @@ function ToggleAllButton({ isDisabled, isExpanded, onClick }: ToggleAllProps): R
 function Brand(): ReactElement {
   return (
     <header className={styles.brand}>
-      <svg aria-hidden="true" className={styles.flowBracket} viewBox="0 0 64 64">
-        <path
-          className={styles.flowBracketAccent}
-          d="M8 10h31l-7 8H18l-8 8 8 8h10v8H15L0 26 15 10Z"
-        />
-        <path d="M25 22h18l13 14-13 18H18l7-8h14l7-10-7-7H25Z" />
-        <path className={styles.flowBracketCalibration} d="M27 31h7v7h-7z" />
+      <svg aria-hidden="true" className={styles.brandMark} viewBox="0 0 64 64">
+        <rect height="16" rx="3.5" width="16" x="4" y="4" />
+        <rect height="16" rx="3.5" width="16" x="24" y="4" />
+        <rect className={styles.brandMarkSpark} height="16" rx="3.5" width="16" x="44" y="4" />
+        <rect height="16" rx="3.5" width="16" x="24" y="24" />
+        <rect height="16" rx="3.5" width="16" x="24" y="44" />
       </svg>
       <span className={styles.brandText}>
         <strong>Dev Toolora</strong>
