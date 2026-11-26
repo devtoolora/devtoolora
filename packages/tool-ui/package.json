@@ -15,7 +15,7 @@
     "@devtoolora/browser-catalog": "0.1.0",
     "@devtoolora/core": "0.1.0",
     "@devtoolora/functions": "0.1.0",
-    "lucide-react": "^1.70.0",
+    "lucide-react": "^1.78.0",
     "pdfjs-dist": "6.5.438"
   },
   "peerDependencies": {
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "sass": "^1.108.0",
+    "sass": "^1.108.2",
     "typescript": "^5.8.0"
   }
 }
