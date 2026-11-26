@@ -56,23 +56,23 @@
     "*.{json,scss,css}": "prettier --write"
   },
   "devDependencies": {
-    "@playwright/test": "^1.65.0",
+    "@playwright/test": "^1.65.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^24.0.0",
-    "@vitest/coverage-v8": "^5.1.0",
+    "@vitest/coverage-v8": "^5.1.1",
     "esbuild": "^0.28.2",
-    "eslint": "^10.14.0",
-    "eslint-plugin-perfectionist": "^5.13.0",
+    "eslint": "^10.15.0",
+    "eslint-plugin-perfectionist": "^5.14.0",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "figlet": "^1.12.0",
-    "knip": "^6.44.1",
-    "lint-staged": "^17.6.0",
+    "figlet": "^1.13.0",
+    "knip": "^6.48.0",
+    "lint-staged": "^17.6.2",
     "pdf-lib": "^1.17.1",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "simple-git-hooks": "^2.14.0",
-    "turbo": "^2.11.10",
+    "turbo": "^2.11.13",
     "typescript": "^5.8.0",
-    "typescript-eslint": "^8.72.1",
+    "typescript-eslint": "^8.73.0",
     "vitest": "^5.1.0"
   }
 }
