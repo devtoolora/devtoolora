@@ -73,6 +73,16 @@ body[data-mode='sidebar'] {
   background: var(--vscode-sideBar-background);
 }
 
+/* VS Code's default webview stylesheet gives code elements the inline-code
+   chip look, which paints a grey bar behind each output line. */
+body[data-mode='editor'] code,
+body[data-mode='sidebar'] code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+}
+
 body[data-mode='editor'] [hidden],
 body[data-mode='sidebar'] [hidden] {
   display: none !important;
