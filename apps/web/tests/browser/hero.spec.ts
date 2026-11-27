@@ -226,7 +226,7 @@ test('matches the approved hero proportions, hover inset, ecosystem, and light c
   });
 
   expect(iconInset).toBeGreaterThanOrEqual(12);
-  await expect(page.getByTestId('surface-item')).toHaveCount(4);
+  await expect(page.getByTestId('surface-item')).toHaveCount(3);
   await expect(page.getByTestId('shared-core')).toHaveCount(1);
 
   await page.getByRole('switch', { name: 'Light theme' }).click();

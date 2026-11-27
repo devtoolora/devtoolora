@@ -2,7 +2,7 @@
 
 Dev Toolora is a statically prerendered React Router application. It exposes
 the homepage, complete tool catalog, one stable route for every generated tool,
-and public Apps, Extension, and About pages. The final deployable artifact is
+and public Extension and About pages. The final deployable artifact is
 always written to `out/web`.
 
 ## Commands

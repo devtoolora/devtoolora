@@ -63,10 +63,7 @@
 .surfaceDiagram {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(130px, 1fr) minmax(104px, 0.8fr) minmax(130px, 1fr) minmax(
-      130px,
-      1fr
-    );
+  grid-template-columns: minmax(130px, 1fr) minmax(104px, 0.8fr) minmax(130px, 1fr);
   align-items: start;
   gap: 20px;
 }
@@ -114,10 +111,6 @@
   color: var(--color-signal);
 }
 
-.surfaceDesktop > strong {
-  color: var(--color-calibration);
-}
-
 .surfaceWindow {
   position: relative;
   display: flex;
@@ -139,10 +132,6 @@
   border: 1px solid rgb(54 183 255 / 42%);
 }
 
-.surfaceDesktop .surfaceWindow {
-  border: 1px solid rgb(255 138 52 / 42%);
-}
-
 .surfaceVscode .surfaceWindow {
   border: 1px solid rgb(54 183 255 / 42%);
 }
@@ -151,12 +140,6 @@
   transform: translateY(-2px);
   border-color: var(--color-signal);
   box-shadow: 0 20px 42px rgb(54 183 255 / 20%);
-}
-
-.surfaceDesktop:hover .surfaceWindow {
-  transform: translateY(-2px);
-  border-color: var(--color-calibration);
-  box-shadow: 0 20px 42px rgb(255 138 52 / 20%);
 }
 
 .surfaceVscode:hover .surfaceWindow {
@@ -240,12 +223,6 @@
   border: 1px solid rgb(54 183 255 / 35%);
   background: rgb(54 183 255 / 12%);
   color: var(--color-signal);
-}
-
-.windowBadge.isCalibration {
-  border: 1px solid rgb(255 138 52 / 35%);
-  background: rgb(255 138 52 / 12%);
-  color: var(--color-calibration);
 }
 
 .surfaceItem:hover .windowBadge {
@@ -341,20 +318,10 @@
   border-color: rgb(0 109 167 / 32%);
 }
 
-:root[data-theme='light'] .surfaceDesktop .surfaceWindow {
-  border-color: rgb(189 79 9 / 32%);
-}
-
 :root[data-theme='light'] .windowBadge.isSignal {
   border-color: rgb(0 109 167 / 24%);
   background: rgb(0 109 167 / 8%);
   color: #00639a;
-}
-
-:root[data-theme='light'] .windowBadge.isCalibration {
-  border-color: rgb(189 79 9 / 24%);
-  background: rgb(189 79 9 / 8%);
-  color: #ad4808;
 }
 
 :root[data-theme='light'] .coreCenter {

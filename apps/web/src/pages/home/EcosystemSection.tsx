@@ -1,4 +1,4 @@
-import { ArrowRight, Globe2, Monitor } from 'lucide-react';
+import { ArrowRight, Globe2 } from 'lucide-react';
 import type React from 'react';
 import { Link } from 'react-router';
 import { BrandMark } from '@components';
@@ -12,19 +12,11 @@ function VsCodeIcon({ size = 16 }: { size?: number }): React.JSX.Element {
   );
 }
 
-type Surface = 'desktop' | 'vscode' | 'web';
-
-type SurfaceBadgeTone = 'calibration' | 'signal';
+type Surface = 'vscode' | 'web';
 
 const surfaceClasses: Record<Surface, string | undefined> = {
-  desktop: styles.surfaceDesktop,
   vscode: styles.surfaceVscode,
   web: styles.surfaceWeb,
-};
-
-const badgeToneClasses: Record<SurfaceBadgeTone, string | undefined> = {
-  calibration: styles.isCalibration,
-  signal: styles.isSignal,
 };
 
 type WindowLineLength = 'full' | 'short' | 'tiny';
@@ -49,7 +41,6 @@ interface WindowEditorProps {
 
 interface SurfaceItemProps {
   badge: React.ReactNode;
-  badgeTone: SurfaceBadgeTone;
   caption: [string, string];
   children: React.ReactNode;
   surface: Surface;
@@ -68,7 +59,6 @@ function SurfaceCaption({ lines: [first, second] }: SurfaceCaptionProps): React.
 
 function SurfaceItem({
   badge,
-  badgeTone,
   caption,
   children,
   surface,
@@ -83,7 +73,7 @@ function SurfaceItem({
       <div aria-hidden="true" className={styles.surfaceWindow}>
         <span className={styles.windowDots}>•••</span>
         {children}
-        <span className={`${styles.windowBadge} ${badgeToneClasses[badgeTone]}`}>{badge}</span>
+        <span className={`${styles.windowBadge} ${styles.isSignal}`}>{badge}</span>
       </div>
       <SurfaceCaption lines={caption} />
     </article>
@@ -126,11 +116,11 @@ function EcosystemCopy(): React.JSX.Element {
         Wherever you code.
       </h2>
       <p>
-        Dev Toolora runs locally with the same tools on the web, on the desktop, and in VS Code.
-        Settings and favorites stay on each device.
+        Dev Toolora runs locally with the same tools on the web and in VS Code. Settings and
+        favorites stay on each device.
       </p>
-      <Link className={styles.outlineAction} to="/apps">
-        Explore all apps
+      <Link className={styles.outlineAction} to="/extension">
+        Explore the extension
         <ArrowRight aria-hidden="true" size={17} />
       </Link>
     </div>
@@ -146,7 +136,6 @@ export function EcosystemSection(): React.JSX.Element {
         <div aria-label="Supported app surfaces" className={styles.surfaceDiagram}>
           <SurfaceItem
             badge={<Globe2 size={16} strokeWidth={1.7} />}
-            badgeTone="signal"
             caption={['Instant access', 'in your browser']}
             surface="web"
             title="Web"
@@ -157,18 +146,7 @@ export function EcosystemSection(): React.JSX.Element {
           <CoreHub />
 
           <SurfaceItem
-            badge={<Monitor size={16} strokeWidth={1.7} />}
-            badgeTone="calibration"
-            caption={['Native app', 'for your OS']}
-            surface="desktop"
-            title="Desktop"
-          >
-            <WindowEditor lines={DOCUMENT_LINES} />
-          </SurfaceItem>
-
-          <SurfaceItem
             badge={<VsCodeIcon size={15} />}
-            badgeTone="signal"
             caption={['Extension inside', 'your editor']}
             surface="vscode"
             title="VS Code"

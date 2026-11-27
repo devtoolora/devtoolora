@@ -12,7 +12,7 @@ const FORM_FACTORS = ['mobile', 'desktop'];
 
 const { values } = parseArgs({
   options: {
-    pages: { default: '/,/tools,/tools/json-format,/apps,/extension,/about', type: 'string' },
+    pages: { default: '/,/tools,/tools/json-format,/extension,/about', type: 'string' },
     runs: { default: '3', type: 'string' },
   },
 });
