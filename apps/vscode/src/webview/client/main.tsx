@@ -1,5 +1,7 @@
+import type { SerializedToolDefinition } from '@devtoolora/core';
 import './styles/theme.css';
 import { loadWorkerHost } from './host/createWebviewWorker';
+import type { SidebarTool } from './types';
 import { readToolData, readWebviewConfig } from './utils/toolData';
 
 const config = readWebviewConfig();
@@ -19,7 +21,7 @@ async function startEditor(container: HTMLElement): Promise<void> {
   mountEditorApp(container, {
     config,
     host,
-    tools: readToolData(),
+    tools: readToolData<SerializedToolDefinition>(),
   });
 }
 
@@ -29,7 +31,7 @@ async function startSidebar(container: HTMLElement): Promise<void> {
 
   mountSidebarApp(container, {
     config,
-    tools: readToolData(),
+    tools: readToolData<SidebarTool>(),
   });
 }
 

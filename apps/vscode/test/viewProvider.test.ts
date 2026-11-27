@@ -13,9 +13,16 @@ type FakePanel = {
 const vscode = vi.hoisted(() => ({
   errors: [] as string[],
   panels: [] as FakePanel[],
+  toolData: [] as string[],
 }));
 
-vi.mock('../src/webview/webviewHtml', () => ({ renderWebviewHtml: () => '<html></html>' }));
+vi.mock('../src/webview/webviewHtml', () => ({
+  renderWebviewHtml: ({ toolData }: { toolData: string }) => {
+    vscode.toolData.push(toolData);
+
+    return '<html></html>';
+  },
+}));
 
 vi.mock('vscode', () => ({
   Uri: { joinPath: () => ({ toString: () => 'vscode-resource:/worker.js' }) },
@@ -70,6 +77,7 @@ function createProvider(): DevTooloraViewProvider {
 beforeEach(() => {
   vscode.errors.length = 0;
   vscode.panels.length = 0;
+  vscode.toolData.length = 0;
 });
 
 describe('DevTooloraViewProvider', () => {
@@ -175,5 +183,39 @@ describe('DevTooloraViewProvider', () => {
     });
 
     assert.deepEqual(targets, [cursor]);
+  });
+
+  it('sends the sidebar only the catalog fields and the panel full tools', async () => {
+    const provider = createProvider();
+    const webview = {
+      asWebviewUri: (uri: unknown) => uri,
+      html: '',
+      onDidReceiveMessage: () => undefined,
+      options: {},
+      postMessage: async () => true,
+    };
+
+    provider.resolveWebviewView({ webview } as never);
+    await provider.openActiveTool('json-format');
+
+    const [sidebarData, panelData] = vscode.toolData;
+    const sidebarTool = (JSON.parse(sidebarData!) as Array<Record<string, unknown>>).find(
+      (tool) => tool.id === 'json-format',
+    );
+    const panelTool = (JSON.parse(panelData!) as Array<Record<string, unknown>>).find(
+      (tool) => tool.id === 'json-format',
+    );
+
+    assert.deepEqual(Object.keys(sidebarTool!).sort(), [
+      'badge',
+      'category',
+      'description',
+      'id',
+      'keywords',
+      'name',
+    ]);
+
+    assert.ok(panelTool!.samples);
+    assert.ok(sidebarData!.length < 200_000);
   });
 });

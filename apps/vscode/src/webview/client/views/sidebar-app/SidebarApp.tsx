@@ -1,4 +1,3 @@
-import type { SerializedToolDefinition } from '@devtoolora/core';
 import { ChevronsDownUp, ChevronsUpDown, Search } from 'lucide-react';
 import {
   useCallback,
@@ -12,14 +11,14 @@ import {
 import { createRoot } from 'react-dom/client';
 import { collapsibleSectionLabels, ToolList } from '../../components/tool-list';
 import { filterTools } from '../../utils/filterTools';
-import type { WebviewConfig } from '../../types';
+import type { SidebarTool, WebviewConfig } from '../../types';
 import { useSidebarState } from '../../hooks/useSidebarState';
 import { getVscode } from '../../host/vscodeHost';
 import styles from './SidebarApp.module.scss';
 
 export type SidebarAppProps = {
   config: WebviewConfig;
-  tools: SerializedToolDefinition[];
+  tools: SidebarTool[];
 };
 
 function focusListItem(list: HTMLElement, direction: 1 | -1): void {
@@ -51,7 +50,7 @@ function useSearchShortcut(searchRef: RefObject<HTMLInputElement | null>): void 
 type CatalogKeysOptions = {
   listRef: RefObject<HTMLDivElement | null>;
   query: string;
-  tools: SerializedToolDefinition[];
+  tools: SidebarTool[];
   onOpenTool(toolId: string): void;
   onQueryChange(query: string): void;
 };

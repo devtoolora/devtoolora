@@ -1,11 +1,10 @@
-import type { SerializedToolDefinition } from '@devtoolora/core';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { NavigationState, WebviewConfig } from '../types';
+import type { NavigationState, SidebarTool, WebviewConfig } from '../types';
 import { getVscode, onHostMessage } from '../host/vscodeHost';
 
 // The host's navigationState is the source of truth; it is saved so the next boot draws the last
 // favorites and recents before the host answers webviewReady.
-export function useSidebarState(tools: SerializedToolDefinition[], config: WebviewConfig) {
+export function useSidebarState(tools: SidebarTool[], config: WebviewConfig) {
   const saved = useMemo(() => getVscode().getState() ?? {}, []);
   const [collapsedCategories, setCollapsedCategories] = useState(
     () => new Set(saved.collapsedCategories ?? []),
