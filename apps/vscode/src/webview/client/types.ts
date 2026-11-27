@@ -1,5 +1,6 @@
 import type {
   JsonTreeNode,
+  SerializedToolDefinition,
   ToolResult as CoreToolResult,
   ToolResultAction,
 } from '@devtoolora/core';
@@ -34,6 +35,12 @@ type ToolResult = {
   text: string;
   textDiff?: CoreToolResult['textDiff'];
 };
+
+// The sidebar only lists and searches tools; samples and fields stay with the editor panel.
+export type SidebarTool = Pick<
+  SerializedToolDefinition,
+  'aliasOf' | 'badge' | 'category' | 'description' | 'id' | 'keywords' | 'name'
+>;
 
 type WebviewMode = 'sidebar' | 'editor';
 

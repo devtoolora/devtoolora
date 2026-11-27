@@ -3,7 +3,11 @@ import { randomBytes } from 'node:crypto';
 import type { SerializedToolDefinition, ToolResult, ToolResultAction } from '@devtoolora/core';
 import type { ResultSource } from '../extension/resultActions';
 import { tools } from '../extension/toolRegistry';
-import type { ExtensionToWebviewMessage, WebviewToExtensionMessage } from './client/types';
+import type {
+  ExtensionToWebviewMessage,
+  SidebarTool,
+  WebviewToExtensionMessage,
+} from './client/types';
 import { renderWebviewHtml } from './webviewHtml';
 
 type RecentTool = {
@@ -290,7 +294,7 @@ export class DevTooloraViewProvider implements vscode.WebviewViewProvider {
     initialInputText?: string,
   ): string {
     const nonce = getNonce();
-    const toolData = JSON.stringify(tools);
+    const toolData = JSON.stringify(mode === 'sidebar' ? tools.map(toSidebarTool) : tools);
     const workerUri = webview
       .asWebviewUri(
         vscode.Uri.joinPath(this.extensionUri, 'dist', 'webview', 'assets', 'worker.js'),
@@ -348,6 +352,18 @@ function normalizeRecentTools(
   }
 
   return result.slice(0, 15);
+}
+
+function toSidebarTool({
+  aliasOf,
+  badge,
+  category,
+  description,
+  id,
+  keywords,
+  name,
+}: SerializedToolDefinition): SidebarTool {
+  return { aliasOf, badge, category, description, id, keywords, name };
 }
 
 function getNonce(): string {

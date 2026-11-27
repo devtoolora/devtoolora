@@ -1,7 +1,6 @@
-import type { SerializedToolDefinition } from '@devtoolora/core';
 import type { ReactElement } from 'react';
 import { filterTools, formatRelativeTime, groupToolsByCategory } from '../../utils/filterTools';
-import type { NavigationState } from '../../types';
+import type { NavigationState, SidebarTool } from '../../types';
 import { ToolIcon } from '../tool-icon';
 import styles from './ToolList.module.scss';
 
@@ -9,19 +8,19 @@ export type ToolListProps = {
   collapsedCategories: Set<string>;
   navigation: NavigationState;
   query: string;
-  tools: SerializedToolDefinition[];
+  tools: SidebarTool[];
   onOpenTool(toolId: string): void;
   onToggleCollapsed(label: string): void;
   onToggleFavorite(toolId: string): void;
 };
 
-type RecentEntry = { timestamp: number; tool: SerializedToolDefinition };
+type RecentEntry = { timestamp: number; tool: SidebarTool };
 
 // A hand-edited globalState can carry a timestamp outside the Date range; toISOString would throw.
 const toDateTime = (timestamp: number): string | undefined =>
   Number.isNaN(new Date(timestamp).getTime()) ? undefined : new Date(timestamp).toISOString();
 
-function toolsForIds(tools: SerializedToolDefinition[], ids: string[]): SerializedToolDefinition[] {
+function toolsForIds(tools: SidebarTool[], ids: string[]): SidebarTool[] {
   const canonicalIds = new Set(
     ids.map((id) => tools.find((tool) => tool.id === id)?.aliasOf ?? id),
   );
@@ -29,10 +28,7 @@ function toolsForIds(tools: SerializedToolDefinition[], ids: string[]): Serializ
   return tools.filter((tool) => canonicalIds.has(tool.id));
 }
 
-function recentEntries(
-  tools: SerializedToolDefinition[],
-  navigation: NavigationState,
-): RecentEntry[] {
+function recentEntries(tools: SidebarTool[], navigation: NavigationState): RecentEntry[] {
   return navigation.recentTools.flatMap((entry) => {
     const tool = tools.find((candidate) => (candidate.aliasOf ?? candidate.id) === entry.toolId);
 
@@ -40,14 +36,14 @@ function recentEntries(
   });
 }
 
-function activeCanonicalId(tools: SerializedToolDefinition[], navigation: NavigationState): string {
+function activeCanonicalId(tools: SidebarTool[], navigation: NavigationState): string {
   const active = tools.find((tool) => tool.id === navigation.activeToolId);
 
   return active?.aliasOf ?? active?.id ?? '';
 }
 
 export function collapsibleSectionLabels(
-  tools: SerializedToolDefinition[],
+  tools: SidebarTool[],
   navigation: NavigationState,
 ): string[] {
   const labels: string[] = [];
@@ -101,7 +97,7 @@ type ToolRowProps = {
   activeToolId: string;
   isFavorite?: boolean;
   timestamp?: number;
-  tool: SerializedToolDefinition;
+  tool: SidebarTool;
   onOpen(): void;
   onToggleFavorite?(): void;
 };
@@ -156,7 +152,7 @@ function useRows({ navigation, tools, onOpenTool, onToggleFavorite }: RowsProps)
   const activeToolId = activeCanonicalId(tools, navigation);
   const favorites = toolsForIds(tools, navigation.favoriteToolIds);
   const favoriteIds = new Set(favorites.map((tool) => tool.id));
-  const rows = (sectionTools: SerializedToolDefinition[]) =>
+  const rows = (sectionTools: SidebarTool[]) =>
     sectionTools.map((tool) => (
       <ToolRow
         activeToolId={activeToolId}
@@ -192,7 +188,7 @@ function CatalogSections({
   const { activeToolId, favorites, rows } = useRows(props);
   const { navigation, tools, onOpenTool } = props;
   const recents = recentEntries(tools, navigation);
-  const section = (label: string, sectionTools: SerializedToolDefinition[]) => (
+  const section = (label: string, sectionTools: SidebarTool[]) => (
     <Section
       count={sectionTools.length}
       isCollapsed={collapsedCategories.has(label)}
