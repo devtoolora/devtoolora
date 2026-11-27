@@ -33,7 +33,6 @@ interface MobileNavDrawerProps {
 
 const NAV_ITEMS: NavItem[] = [
   { label: 'Tools', to: '/tools' },
-  { label: 'Apps', to: '/apps' },
   { label: 'Extension', to: '/extension' },
   { label: 'About', to: '/about' },
 ];

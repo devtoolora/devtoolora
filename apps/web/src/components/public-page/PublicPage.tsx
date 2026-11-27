@@ -21,7 +21,6 @@ export interface PublicPageProps {
 
 const breadcrumbLabels: Record<PublicPageKind, string> = {
   about: 'About',
-  apps: 'Apps',
   extension: 'Extension',
 };
 

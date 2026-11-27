@@ -8,7 +8,7 @@ import { webToolAliases, webToolMetadata } from './src/toolMetadata.generated';
 const projectRoot = join(import.meta.dirname, '../..');
 const buildDirectory = join(import.meta.dirname, 'build');
 const webOutDir = join(projectRoot, 'out', 'web');
-const shellPages = ['/', '/tools', '/apps', '/extension', '/about'];
+const shellPages = ['/', '/tools', '/extension', '/about'];
 const publicPaths = [...shellPages, ...webToolMetadata.map((tool) => `/tools/${tool.slug}`)];
 const prerenderPaths = [
   ...publicPaths,

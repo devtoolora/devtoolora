@@ -2,22 +2,19 @@ import {
   AppWindow,
   Code2,
   FileText,
-  FolderOpen,
   GitFork,
   Globe,
   HardDrive,
   Keyboard,
   type LucideIcon,
-  Palette,
   Replace,
   Scale,
   ShieldCheck,
-  Star,
   UserX,
 } from 'lucide-react';
 import { GITHUB_URL, ISSUES_URL } from '@/lib/siteLinks';
 
-export type PublicPageKind = 'about' | 'apps' | 'extension';
+export type PublicPageKind = 'about' | 'extension';
 
 export interface PublicPageFeature {
   href?: string;
@@ -65,7 +62,7 @@ export const publicPageContent: Record<PublicPageKind, PublicPageContent> = {
       },
       {
         icon: HardDrive,
-        text: 'Favorites and your theme are saved on your device. Drafts are saved only in the VS Code extension, and the desktop app keeps neither your input nor your file paths.',
+        text: 'Favorites and your theme are saved on your device. Drafts are saved only in the VS Code extension.',
         title: 'What gets saved',
       },
       {
@@ -87,42 +84,8 @@ export const publicPageContent: Record<PublicPageKind, PublicPageContent> = {
       },
     ],
     featuresTitle: 'How it works',
-    lead: 'Dev Toolora is a set of more than 250 developer tools for formatting, converting, encoding and checking your data. You can use it on the web, as a desktop app, or in your editor.',
+    lead: 'Dev Toolora is a set of more than 250 developer tools for formatting, converting, encoding and checking your data. You can use it on the web or in your editor.',
     title: 'Developer tools that stay on your computer.',
-  },
-  apps: {
-    eyebrow: 'Desktop app',
-    features: [
-      {
-        icon: FolderOpen,
-        text: 'Open and save files through your system dialogs, and copy results to the system clipboard.',
-        title: 'Works with your files',
-      },
-      {
-        icon: Star,
-        text: 'Pin your favorite tools and get back to the last eight you opened from the sidebar.',
-        title: 'Favorites and recent tools',
-      },
-      {
-        icon: Palette,
-        text: 'Pick from six color themes, including Liquid Glass, each in light and dark. Or set your own background color.',
-        title: 'Your look',
-      },
-      {
-        icon: HardDrive,
-        text: 'The app saves your theme, favorites, recent tools and window size. It does not save your input or file paths.',
-        title: 'Keeps only your settings',
-      },
-    ],
-    featuresTitle: 'What you get',
-    lead: 'The same tools as the website, in their own window on macOS, Windows and Linux.',
-    screenshot: {
-      alt: 'The Dev Toolora desktop app with the JSON Format tool open, showing formatted JSON next to the input.',
-      name: 'desktop',
-    },
-    status: 'Coming soon',
-    statusNote: 'Downloads will appear here when signed builds are ready.',
-    title: 'Every tool in its own window.',
   },
   extension: {
     commands: [
@@ -188,12 +151,6 @@ export const aboutSurfaces: PublicPageFeature[] = [
     text: 'Every tool in your browser, with nothing to install.',
     title: 'Web',
     to: '/tools',
-  },
-  {
-    icon: AppWindow,
-    text: 'Native file dialogs on macOS, Windows and Linux.',
-    title: 'Desktop',
-    to: '/apps',
   },
   {
     icon: Code2,

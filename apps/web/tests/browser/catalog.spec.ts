@@ -427,7 +427,6 @@ test('connects truthful public routes and registers the PWA from direct visits',
   page,
 }) => {
   for (const [path, heading] of [
-    ['/apps', 'Every tool in its own window.'],
     ['/extension', 'Run tools on your selection, inside your editor.'],
     ['/about', 'Developer tools that stay on your computer.'],
   ]) {

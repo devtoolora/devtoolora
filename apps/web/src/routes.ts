@@ -6,7 +6,6 @@ export default [
   layout('routes/site-layout.tsx', [
     route('tools', 'routes/tools.tsx'),
     route('tools/:slug', 'routes/tool-detail.tsx'),
-    route('apps', 'routes/apps.tsx'),
     route('extension', 'routes/extension.tsx'),
     route('about', 'routes/about.tsx'),
   ]),
