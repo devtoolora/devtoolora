@@ -120,6 +120,14 @@ describe('docxToText', () => {
     );
   });
 
+  it('escapes a backslash before a pipe in a table cell once', () => {
+    const cell = (text: string) => `<w:tc>${para(run(text))}</w:tc>`;
+    const { text } = convert(`<w:tbl><w:tr>${cell('a\\')}${cell('b\\|c')}</w:tr></w:tbl>`);
+
+    // Body text escaping already doubles the backslash, so the table only escapes the pipe.
+    assert.equal(text, '| a\\\\ | b\\\\\\|c |\n| --- | --- |');
+  });
+
   it('escapes body text and keeps tabs outside emphasis', () => {
     const { text } = convert(
       para(run('a*b_c &lt;x&gt;')) +
