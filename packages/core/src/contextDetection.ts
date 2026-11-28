@@ -63,12 +63,17 @@ export function detectContext(text: string): DetectedContext | undefined {
   return { kind, label: definition.label, toolIds: [...definition.toolIds] };
 }
 
+// The whitespace after curl is taken whole before the URL search, so no split of it is retried.
 function looksLikeCurl(value: string): boolean {
-  return /^curl\s+[^\r\n]*https?:\/\//i.test(value);
+  const command = /^curl\s+/i.exec(value);
+
+  return command !== null && /^[^\r\n]*https?:\/\//i.test(value.slice(command[0].length));
 }
 
+// The header name runs to the first colon after its first character, so the line is not retried at
+// every later colon.
 function looksLikeRawHttpRequest(value: string): boolean {
-  return /^(?:GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\s+(?:https?:\/\/\S+|\/\S*|\*)\s+HTTP\/1\.[01]\r?\n(?:[^\r\n]+:\s*[^\r\n]*\r?\n)+/i.test(
+  return /^(?:GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\s+(?:https?:\/\/\S+|\/\S*|\*)\s+HTTP\/1\.[01]\r?\n[^\r\n][^\r\n:]*:[^\r\n]*\r?\n/i.test(
     value,
   );
 }
@@ -134,11 +139,71 @@ function looksLikeJsonLines(value: string): boolean {
 }
 
 function looksLikeStackTrace(value: string): boolean {
-  const javascriptFrame = /^\s*at\s+.+(?:\(|\s)\S+:\d+(?::\d+)?\)?$/m;
-  const pythonTraceback =
-    /^Traceback \(most recent call last\):\r?\n[\s\S]*^\s*File "[^"]+", line \d+/m;
+  return value.split(LINE_BREAK).some(isLocatedFrame) || looksLikePythonTraceback(value);
+}
 
-  return javascriptFrame.test(value) || pythonTraceback.test(value);
+// The same as /^Traceback \(most recent call last\):\r?\n[\s\S]*^\s*File "[^"]+", line \d+/m: the
+// File line may follow any later header too, and its indent need not span lines, which kept the
+// regex rescanning runs of blank lines.
+function looksLikePythonTraceback(value: string): boolean {
+  const header = /^Traceback \(most recent call last\):\r?\n/m.exec(value);
+
+  return (
+    header !== null &&
+    /^[^\S\n\r\u2028\u2029]*File "[^"]+", line \d+/m.test(
+      value.slice(header.index + header[0].length),
+    )
+  );
+}
+
+const LINE_BREAK = /\r\n|[\n\r\u2028\u2029]/;
+const LINE_TERMINATOR = /[\n\r\u2028\u2029]/;
+const FRAME_START = /^\s*at(\s+)/;
+const FRAME_LOCATION = /^\S+:\d+(?::\d+)?\)?$/;
+
+/**
+ * Tests a line against /^\s*at\s+.+(?:\(|\s)\S+:\d+(?::\d+)?\)?$/ in linear time; that regex
+ * retries every split of a long line. The location is a space-free tail after whitespace or "(",
+ * and a longer tail matches whenever a shorter one does, so only the leftmost such cut whose prefix
+ * still reads "at <name>" is tested. Kept in sync with packages/functions/src/logs/stackTrace.ts.
+ */
+function isLocatedFrame(line: string): boolean {
+  const isPrefix = framePrefixTest(line);
+
+  if (!isPrefix) return false;
+
+  for (let cut = lastWhitespace(line); cut !== -1; cut = line.indexOf('(', cut + 1)) {
+    if (isPrefix(cut)) return FRAME_LOCATION.test(line.slice(cut + 1));
+  }
+
+  return false;
+}
+
+/** Whether line.slice(0, end) matches /^\s*at\s+.+$/, for any end, in constant time. */
+function framePrefixTest(line: string): ((end: number) => boolean) | undefined {
+  const start = FRAME_START.exec(line);
+
+  if (!start) return undefined;
+
+  const runEnd = start[0].length;
+  const runStart = runEnd - start[1]!.length;
+  const terminator = line.slice(runEnd).search(LINE_TERMINATOR);
+  const firstTerminator = terminator === -1 ? line.length : runEnd + terminator;
+
+  // Past the whitespace run the name is the rest, which "." must cover; inside it, the name is the
+  // run's last character and needs one more whitespace before it.
+  return (end) =>
+    end > runEnd
+      ? end <= firstTerminator
+      : end - runStart >= 2 && !LINE_TERMINATOR.test(line.charAt(end - 1));
+}
+
+function lastWhitespace(line: string): number {
+  let index = line.length - 1;
+
+  while (index >= 0 && !/\s/.test(line.charAt(index))) index -= 1;
+
+  return index;
 }
 
 function looksLikeXml(value: string): boolean {
