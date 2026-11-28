@@ -3,7 +3,10 @@ import { boundedInteger } from '../validation';
 import { splitSvgProlog } from './shared';
 
 const maxSide = 10000;
-const attributePattern = /([A-Za-z_:][-A-Za-z0-9_:.]*)\s*=\s*("([^"]*)"|'([^']*)')/g;
+// A name that is not followed by = fails the same way from any later letter of it, so the
+// lookbehind tries each run of name characters once, from its first letter, not from every letter.
+const attributePattern =
+  /(?=[A-Za-z_:])(?<![A-Za-z_:][-A-Za-z0-9_:.]*?)([A-Za-z_:][-A-Za-z0-9_:.]*)\s*=\s*("([^"]*)"|'([^']*)')/g;
 
 export type SvgRenderReply = { bytes: Uint8Array } | { error: string };
 export type SvgRenderRequest = {

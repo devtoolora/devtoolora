@@ -18,14 +18,22 @@ export function svgDataUri(svg: string, encoding: 'base64' | 'url'): string {
 const attribute = (tag: string, name: string): string | undefined =>
   tag.match(new RegExp(`\\s${name}\\s*=\\s*["']([^"']*)["']`))?.[1];
 
+/** What /<svg(?=[\s>/])[^>]*>/ matches, without rescanning from every <svg when no ">" follows. */
+function rootTag(svg: string): string {
+  const start = svg.search(/<svg(?=[\s>/])/);
+  const end = start === -1 ? -1 : svg.indexOf('>', start);
+
+  return end === -1 ? '' : svg.slice(start, end + 1);
+}
+
 export function withIntrinsicSize(svg: string): string {
-  const tag = svg.match(/<svg(?=[\s>/])[^>]*>/)?.[0] ?? '';
+  const tag = rootTag(svg);
   const viewBox = (attribute(tag, 'viewBox') ?? '').split(/[\s,]+/).map(Number);
   const [boxWidth = NaN, boxHeight = NaN] = viewBox.slice(2);
   const rawWidth = attribute(tag, 'width');
   const rawHeight = attribute(tag, 'height');
   const plain = (value: string | undefined) =>
-    value === undefined || /^\s*[\d.]+\s*(px)?\s*$/.test(value);
+    value === undefined || /^\s*[\d.]+\s*(?:px\s*)?$/.test(value);
   const width = Number.parseFloat(rawWidth ?? '');
   const height = Number.parseFloat(rawHeight ?? '');
 

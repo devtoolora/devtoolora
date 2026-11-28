@@ -1,6 +1,7 @@
 import { FunctionError } from '../errors';
 import { splitSvgProlog } from './shared';
 import { editorPrefixes, isEditorName } from './svgSafety';
+import { svgTokens } from './tokens';
 
 const numericAttributes = new Set([
   'cx',
@@ -47,8 +48,6 @@ const numericAttributes = new Set([
   'y2',
 ]);
 const textElements = new Set(['foreignObject', 'script', 'style', 'text', 'textPath', 'tspan']);
-const svgTokenPattern =
-  /<!--[\s\S]*?-->|<!\[CDATA\[[\s\S]*?\]\]>|<\?[\s\S]*?\?>|<(?:"[^"]*"|'[^']*'|[^'">])*>/g;
 
 export function optimizeSvg(sourceText: string): {
   optimizedBytes: number;
@@ -92,10 +91,9 @@ function minifySvgTokens(
 
   let last = 0;
 
-  for (const match of root.body.matchAll(svgTokenPattern)) {
-    addText(root.body.slice(last, match.index));
-    last = match.index + match[0].length;
-    const token = match[0];
+  for (const { index, text: token } of svgTokens(root.body)) {
+    addText(root.body.slice(last, index));
+    last = index + token.length;
 
     if (token.startsWith('<!--')) continue;
 
@@ -155,13 +153,11 @@ function utf8Length(value: string): number {
 }
 
 function cleanSvgTag(tag: string, editor: Set<string>): string {
-  const match = /^<([^\s/>]+)([\s\S]*?)(\/?)\s*>$/.exec(tag);
+  const parts = splitTag(tag);
 
-  if (!match) return tag;
+  if (!parts) return tag;
 
-  const name = match[1]!;
-  const rest = match[2]!;
-  const selfClosing = match[3]!;
+  const { name, rest, selfClosing } = parts;
   const attributes: string[] = [];
   const attribute = /\s*([^\s=]+)(?:\s*=\s*("[^"]*"|'[^']*'))?/y;
 
@@ -184,6 +180,22 @@ function cleanSvgTag(tag: string, editor: Set<string>): string {
   }
 
   return `<${name}${attributes.map((item) => ` ${item}`).join('')}${selfClosing}>`;
+}
+
+/**
+ * Splits a tag the way /^<([^\s/>]+)([\s\S]*?)(\/?)\s*>$/ does, without retrying the trailing
+ * whitespace from every character of a long tag: the lazy middle stops before the trailing
+ * whitespace and one "/" in front of it.
+ */
+function splitTag(tag: string): { name: string; rest: string; selfClosing: string } | undefined {
+  const name = /^<([^\s/>]+)/.exec(tag)?.[1];
+
+  if (name === undefined || !tag.endsWith('>')) return undefined;
+
+  const body = tag.slice(name.length + 1, -1).trimEnd();
+  const selfClosing = body.endsWith('/') ? '/' : '';
+
+  return { name, rest: body.slice(0, body.length - selfClosing.length), selfClosing };
 }
 
 function trimNumbers(quoted: string): string {
