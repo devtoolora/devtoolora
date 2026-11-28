@@ -423,7 +423,7 @@ describe('package verification', () => {
   it('prerenders every public route with route-specific metadata', () => {
     const webRoot = join(process.cwd(), 'out/web');
     const htmlFiles = listFiles(webRoot).filter((path) => path.endsWith('.html'));
-    const staticRoutes = ['/', '/tools', '/apps', '/extension', '/about', '/desktop'];
+    const staticRoutes = ['/', '/tools', '/extension', '/about', '/desktop'];
     const prerenderedCount = staticRoutes.length + webToolMetadata.length + webToolAliases.length;
 
     assert.equal(
@@ -433,7 +433,6 @@ describe('package verification', () => {
     );
 
     for (const [path, title] of [
-      ['apps/index.html', 'Desktop App — Dev Toolora'],
       ['extension/index.html', 'VS Code Extension — Dev Toolora'],
       ['about/index.html', 'About — Dev Toolora'],
       ['desktop/index.html', 'Dev Toolora Desktop'],
@@ -619,7 +618,7 @@ describe('package verification', () => {
       'the worker entry must be precached',
     );
 
-    assert.match(serviceWorker, /"\/apps"/);
+    assert.match(serviceWorker, /"\/extension"/);
 
     assert.match(
       serviceWorker,
