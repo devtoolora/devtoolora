@@ -56,9 +56,20 @@ export function generateEasingCss(points: BezierPoints, durationMs: number): str
   ].join('\n');
 }
 
+/** What /cubic-bezier\(([^)]*)\)/ captures: the first call, up to the next ")". */
+function bezierArguments(css: string): string | undefined {
+  const open = css.indexOf('cubic-bezier(');
+
+  if (open === -1) return undefined;
+
+  const start = open + 'cubic-bezier('.length;
+  const close = css.indexOf(')', start);
+
+  return close === -1 ? undefined : css.slice(start, close);
+}
+
 export function parseCubicBezier(css: string): BezierPoints | undefined {
-  const values = css
-    .match(/cubic-bezier\(([^)]*)\)/)?.[1]
+  const values = bezierArguments(css)
     ?.split(',')
     .map((value) => (value.trim() === '' ? Number.NaN : Number(value)));
 

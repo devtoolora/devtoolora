@@ -91,7 +91,8 @@ export function morseToText(text: string): string {
   if (!input) throw new FunctionError('REQUIRED_INPUT', 'Morse input is required.');
 
   return input
-    .split(/\s*\/\s*/)
+    .split('/')
+    .map((word) => word.trim())
     .map((word) => {
       if (!word)
         throw new FunctionError(
