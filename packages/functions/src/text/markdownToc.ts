@@ -9,13 +9,41 @@ const maxChars = 1_000_000;
 
 // Patterns exclude their own delimiters inside, so each start scans a bounded run.
 function plainText(raw: string): string {
-  return raw
-    .split('\n')
-    .map((line) => line.trim())
-    .join(' ')
-    .replace(/!?\[([^[\]]*)\]\([^()]*\)/g, '$1')
-    .replace(/<[A-Za-z/!][^<>]*>/g, '')
-    .trim();
+  return withoutTags(
+    raw
+      .split('\n')
+      .map((line) => line.trim())
+      .join(' ')
+      .replace(/!?\[([^[\]]*)\]\([^()]*\)/g, '$1'),
+  ).trim();
+}
+
+/**
+ * Removes what repeating .replace(/<[A-Za-z/!][^<>]*>/g, '') until nothing changes would, so
+ * taking <b> out of <<b>b> cannot leave a new tag behind. One pass keeps the open "<" not yet
+ * followed by a ">"; each ">" closes the latest of them when a tag can start there.
+ */
+function withoutTags(text: string): string {
+  const kept: string[] = [];
+  const opens: number[] = [];
+
+  for (const char of text) {
+    const open = opens.at(-1);
+
+    if (char === '>' && open !== undefined && /[A-Za-z/!]/.test(kept[open + 1] ?? '')) {
+      kept.length = open;
+      opens.pop();
+
+      continue;
+    }
+
+    if (char === '>') opens.length = 0;
+    if (char === '<') opens.push(kept.length);
+
+    kept.push(char);
+  }
+
+  return kept.join('');
 }
 
 export function githubSlug(heading: string): string {

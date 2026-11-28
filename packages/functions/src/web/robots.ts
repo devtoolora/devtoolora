@@ -40,6 +40,18 @@ function warnEmptyGroups(
   });
 }
 
+/**
+ * What value.replace(/#.*$/, '') removes, without rescanning from every "#": "." stops at line
+ * terminators, so the comment is the first "#" after the last of them.
+ */
+function stripComment(value: string): string {
+  const from =
+    Math.max(...['\n', '\r', '\u2028', '\u2029'].map((end) => value.lastIndexOf(end))) + 1;
+  const hash = value.indexOf('#', from);
+
+  return hash === -1 ? value : value.slice(0, hash);
+}
+
 export function parseRobots(text: string): RobotsFile {
   const file: RobotsFile = { groups: [], sitemaps: [], warnings: [] };
   let group: RobotsGroup | undefined;
@@ -52,7 +64,7 @@ export function parseRobots(text: string): RobotsFile {
     .split(/\r\n|\r|\n/)
     .forEach((raw, index) => {
       const line = index + 1;
-      const content = raw.replace(/#.*$/, '').trim();
+      const content = stripComment(raw).trim();
       const colon = content.indexOf(':');
 
       if (!content) {
@@ -187,7 +199,7 @@ function normalizePath(entry: string): string {
     }
   }
 
-  const path = entry.replace(/#.*$/, '');
+  const path = stripComment(entry);
 
   return path.startsWith('/') ? path : `/${path}`;
 }

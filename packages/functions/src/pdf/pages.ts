@@ -59,7 +59,9 @@ export function parsePageSelection(
     .trim()
     .toLowerCase()
     .replace(/[–—]/g, '-')
-    .replace(/\s*-\s*/g, '-');
+    .split('-')
+    .map((part) => part.trim())
+    .join('-');
 
   if (!source) throw pdfError(`Enter the pages. ${selectionHelp}`);
 
@@ -80,7 +82,8 @@ export function parsePageSelection(
     return number;
   };
 
-  for (const raw of source.split(/[,;]|\s+(?=\d|last|odd|even|all)/)) {
+  // A whitespace run either precedes a page or not, so it is tried once, from its first character.
+  for (const raw of source.split(/[,;]|(?<!\s)\s+(?=\d|last|odd|even|all)/)) {
     const part = raw.trim();
 
     if (!part) continue;

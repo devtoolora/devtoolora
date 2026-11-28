@@ -24,8 +24,8 @@ const unsafeIntegerMessage =
 const outOfRangeMessage =
   'A number such as 1e400 or 1e-400 is beyond the range of a double and would become null or 0; quote it as a string.';
 // Valid JSON only, so a string is read as a whole and anything else that starts with a digit is a
-// number.
-const jsonStringOrNumber = /"(?:[^"\\]|\\.)*"|-?\d[\d.eE+-]*/g;
+// number. An unclosed string runs to the end, so invalid input is not rescanned from every quote.
+const jsonStringOrNumber = /"(?:[^"\\]|\\.)*"?|-?\d[\d.eE+-]*/g;
 
 function rejectUnsafeInteger(_key: string, value: unknown): unknown {
   if (typeof value === 'number' && Number.isInteger(value) && !Number.isSafeInteger(value))
