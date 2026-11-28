@@ -7,7 +7,7 @@ const SWALLOWED_LINE = '\uFFFF';
 const LINE_BREAK = /\r\n|\r|\n|\uFFFF/g;
 
 // A bare pwd holding a path is the working directory variable of an env dump, not a password.
-const PATH_VALUE = /\\*["'`]?(?:[/~]|[A-Za-z]:[\\/])/y;
+const PATH_VALUE = /(?<!\\)\\*["'`]?(?:[/~]|[A-Za-z]:[\\/])/y;
 const BARE_PWD_KEY = /^pwd\b/i;
 
 const lineBreaks = (text: string): number => text.match(LINE_BREAK)?.length ?? 0;
@@ -214,11 +214,14 @@ function redactFields(
   return { openLine, redactions, text: parts.join('') };
 }
 
-const VALUE_DELIMITER = /\\*["'`]/y;
+// A value starts after a separator and a nested token after a bracket or a closed string, never
+// inside a run of backslashes or digits. The lookbehinds state that, so a run is scanned once
+// rather than again from each of its characters.
+const VALUE_DELIMITER = /(?<!\\)\\*["'`]/y;
 const AFTER_CLOSE = /[^\s,;)}\]]*/y;
-const JSON_LITERAL = /(?:-?\d[\d.eE+-]*|true|false|null)(?=[\s,}\]]|$)/y;
+const JSON_LITERAL = /(?<![\d.eE+-])(?:-?\d[\d.eE+-]*|true|false|null)(?=[\s,}\]]|$)/y;
 const BARE_VALUE = /\S+/y;
-const NESTED_TOKEN = /(\\*["'`])|[[\]{}()]/g;
+const NESTED_TOKEN = /(?<!\\)(\\*["'`])|[[\]{}()]/g;
 const CLOSERS: Record<string, string> = { '(': ')', '[': ']', '{': '}' };
 
 function matchAt(pattern: RegExp, text: string, index: number): string | undefined {
